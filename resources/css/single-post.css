@@ -1,0 +1,248 @@
+/* ==========================================================================
+   Single post (detalle de blog) — AGO
+   Encabezado (categorias + titulo + extracto + autor/fecha + imagen
+   destacada, todo centrado) + cuerpo (contenido del post + categorias de
+   nuevo) + carrusel de "Blogs Relacionados". Los 2 fondos son
+   administrables (Personalizar → Blog — Detalle del post) y opcionales —
+   sin nada subido, ambas secciones quedan blancas.
+   ========================================================================== */
+
+@layer components {
+
+    /* ── Encabezado ────────────────────────────────────────────────────── */
+    .single-post__header {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        background-color: var(--color-white, #fff);
+        background-repeat: no-repeat;
+        background-position: top right;
+        background-size: auto;
+    }
+
+    .single-post__container {
+        position: relative;
+        z-index: 1;
+        max-width: var(--container-max, 1200px);
+        width: 100%;
+        margin-inline: auto;
+        padding-inline: var(--section-padding-x, 24px);
+        text-align: center;
+    }
+
+    .single-post__container--narrow {
+        max-width: 760px;
+        text-align: left;
+    }
+
+    .single-post__categories,
+    .single-post__tags {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 24px;
+    }
+
+    .single-post__tags {
+        justify-content: flex-start;
+        margin-top: 40px;
+        margin-bottom: 0;
+    }
+
+    .single-post__category {
+        display: inline-flex;
+        align-items: center;
+        height: 36px;
+        padding: 0 18px;
+        border: 1.5px solid var(--color-text-dark, #1A1A1A);
+        border-radius: 18px;
+        background-color: var(--color-white, #fff);
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: var(--color-text-dark, #1A1A1A);
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+    }
+
+    .single-post__category:hover {
+        background-color: var(--color-bg-light, #F5F5F5);
+    }
+
+    .single-post__title {
+        max-width: 760px;
+        margin: 0 auto 20px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-h1, 48px);
+        line-height: 1.2;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    .single-post__excerpt {
+        max-width: 620px;
+        margin: 0 auto 32px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 600;
+        font-size: var(--text-subtitle, 24px);
+        line-height: 1.4;
+        color: var(--color-text-body, #4A4A4A);
+    }
+
+    .single-post__meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: var(--container-max, 1200px);
+        margin: 0 auto 32px;
+    }
+
+    .single-post__author,
+    .single-post__date {
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    .single-post__media {
+        max-width: var(--container-max, 1200px);
+        margin-inline: auto;
+        padding-inline: var(--section-padding-x, 24px);
+    }
+
+    .single-post__img {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: 640px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    /* ── Cuerpo (contenido del post) ──────────────────────────────────── */
+    .single-post__body {
+        padding-block: 60px;
+    }
+
+    .single-post__content {
+        margin-bottom: 0;
+    }
+
+    /* ── Blogs relacionados ────────────────────────────────────────────── */
+    .relacionados {
+        position: relative;
+        padding-block: var(--section-padding-y, 60px);
+        background-color: var(--color-white, #fff);
+        background-repeat: no-repeat;
+        background-position: bottom center;
+        background-size: 100% auto;
+    }
+
+    .relacionados__container {
+        position: relative;
+        z-index: 1;
+        max-width: var(--container-max, 1200px);
+        width: 100%;
+        margin-inline: auto;
+        padding-inline: var(--section-padding-x, 24px);
+    }
+
+    .relacionados__title {
+        margin: 0 0 40px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-h1, 48px);
+        line-height: 1.1;
+        text-align: center;
+        color: var(--color-purple, #6B3DFE);
+    }
+
+    .relacionados__carousel-wrap {
+        position: relative;
+    }
+
+    .relacionados__swiper {
+        overflow: hidden;
+    }
+
+    .relacionados__slide {
+        height: auto;
+    }
+
+    .relacionados__slide .blog-listing__card {
+        height: 100%;
+    }
+
+    /* Flechas prev/next — fuera de .relacionados__swiper a proposito
+       (Swiper le pone overflow:hidden a ".swiper" y recortaria estos
+       botones, montados sobre el borde con offset negativo). */
+    .relacionados__prev,
+    .relacionados__next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background-color: #000;
+        border: none;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    .relacionados__prev {
+        left: -22px;
+    }
+
+    .relacionados__next {
+        right: -22px;
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+        .single-post__title {
+            font-size: var(--text-h2, 32px);
+        }
+
+        .single-post__excerpt {
+            font-size: var(--text-body, 18px);
+        }
+
+        .relacionados__title {
+            font-size: var(--text-h2, 32px);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .single-post__container,
+        .single-post__media,
+        .relacionados__container {
+            padding-inline: var(--section-padding-x-mobile, 30px);
+        }
+
+        .single-post__meta {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .single-post__tags {
+            margin-top: 32px;
+        }
+
+        .relacionados__prev,
+        .relacionados__next {
+            display: none;
+        }
+    }
+
+}

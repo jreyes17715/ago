@@ -1,0 +1,348 @@
+/* ==========================================================================
+   Servicios — AGO
+   ========================================================================== */
+
+@layer components {
+
+    .servicios {
+        position: relative;
+        overflow: hidden;
+        padding-block: var(--section-padding-y, 60px);
+        background-color: var(--color-white, #fff);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    /* ── Imagenes flotantes (hasta 4 posiciones) ───────────────────────────
+       Dos capas de movimiento independientes:
+       1) el wrapper tiene una animacion CSS propia (flota solo, en bucle)
+       2) la imagen interna recibe el transform del parallax por JS
+       Al vivir en elementos distintos, no se pisan entre si. ────────────── */
+    .servicios__floating-wrap {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+        animation: dd-float-bob 5s ease-in-out infinite;
+    }
+
+    .servicios__floating-wrap--tl {
+        top: -40px;
+        left: -40px;
+    }
+
+    .servicios__floating-wrap--mr {
+        top: 40%;
+        right: -30px;
+        animation-delay: -1.2s;
+    }
+
+    .servicios__floating-wrap--bl {
+        bottom: 10%;
+        left: -50px;
+        animation-delay: -3.6s;
+    }
+
+    .servicios__floating-wrap--br {
+        bottom: -40px;
+        right: -40px;
+        animation-delay: -2.5s; /* desfasado para que no floten en sincronia */
+    }
+
+    .servicios__floating {
+        display: block;
+        width: 180px;
+        filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.18));
+        will-change: transform;
+    }
+
+    .servicios__floating-wrap--tl .servicios__floating,
+    .servicios__floating-wrap--mr .servicios__floating {
+        width: 130px;
+    }
+
+    @keyframes dd-float-bob {
+        0%, 100% { translate: 0 0; }
+        50%      { translate: 0 -16px; }
+    }
+
+    /* ── Contenido ─────────────────────────────────────────────────────── */
+    .servicios__container {
+        position: relative;
+        z-index: 2;
+        max-width: var(--container-max, 1200px);
+        width: 100%;
+        margin-inline: auto;
+        padding-inline: var(--section-padding-x, 24px);
+    }
+
+    .servicios__header {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 32px;
+        margin-bottom: 48px;
+    }
+
+    .servicios__title {
+        margin: 0;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-h1, 48px);
+        line-height: 1.1;
+        text-transform: uppercase;
+        color: var(--color-green, #2C856B);
+    }
+
+    .servicios__title .hero-accent {
+        text-transform: none;
+    }
+
+    .servicios__subtitle {
+        margin: 0;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-subtitle, 24px);
+        line-height: 1.4;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    /* ── Grid de tarjetas ──────────────────────────────────────────────── */
+    .servicios__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        /* align-items:start evita que una tarjeta cerrada se estire para
+           igualar la altura de la de al lado cuando esa otra se abre. */
+        align-items: start;
+    }
+
+    /* ── Tarjeta = acordeon nativo (<details>/<summary>, sin JS) ──────────────
+       Cerrada: icono + titulo + extracto + "Conoce más" (misma tarjeta en
+       cualquier pagina donde se use el bloque). Al abrir: fondo verde/gris
+       intercalado, se oculta el extracto/boton, aparece "(0N)" antes del
+       titulo y abajo el contenido completo del servicio + su CTA propio. ── */
+    .servicios__card {
+        display: block;
+        padding: 32px;
+        border: 1px solid #E4E4E7;
+        border-radius: 8px;
+        background-color: var(--color-white, #fff);
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .servicios__card[open].servicios__card--green {
+        background-color: var(--color-green, #2C856B);
+        border-color: var(--color-green, #2C856B);
+        color: var(--color-white, #fff);
+    }
+
+    .servicios__card[open].servicios__card--gray {
+        background-color: var(--color-bg-light, #F5F5F5);
+        border-color: var(--color-bg-light, #F5F5F5);
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    /* Col. 1 = ícono (ancho fijo, arriba). Col. 2 = todo el contenido
+       (título, texto, botón) en columna, alineados entre sí. */
+    .servicios__card-summary {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 16px;
+        cursor: pointer;
+        list-style: none;
+    }
+
+    .servicios__card-summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .servicios__card-icon {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        margin-top: 4px; /* alinea ópticamente con la línea base del título */
+    }
+
+    /* Icono visible solo cerrada — abierta no hace falta, ya se ve el fondo
+       de color y el numero. */
+    .servicios__card[open] .servicios__card-icon {
+        display: none;
+    }
+
+    .servicios__card-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .servicios__card-title {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        margin: 0 0 12px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-subtitle, 24px); /* token de 24px */
+        line-height: 1.3;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    .servicios__card[open] .servicios__card-title {
+        color: inherit;
+        margin-bottom: 0;
+    }
+
+    /* "(0N)" — solo visible con la tarjeta abierta. */
+    .servicios__card-number {
+        display: none;
+        font-weight: 600;
+        opacity: 0.8;
+        flex-shrink: 0;
+    }
+
+    .servicios__card[open] .servicios__card-number {
+        display: inline;
+    }
+
+    .servicios__card-content {
+        flex: 1 0 auto;
+        margin: 0 0 24px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 400;
+        font-size: var(--text-body, 18px);
+        line-height: 1.5;
+        color: var(--color-text-body, #4A4A4A);
+    }
+
+    /* ── CTA de la tarjeta cerrada: boton + icono circular ───────────────── */
+    .servicios__card-cta {
+        display: flex;
+        align-items: center;
+        gap: 0; /* pegado, mismo criterio que .hero__cta */
+        margin-top: auto;
+    }
+
+    /* El pill en si vive en el componente compartido
+       resources/css/components/buttons.css (.dd-btn, modificador --green).
+       Acá solo el ancho fijo propio de la tarjeta. */
+    .servicios__card-btn {
+        width: 164px;
+        padding: 0 16px;
+    }
+
+    /* El SVG "Group 49.svg" ya trae su propio circulo dibujado (colores fijos
+       #2C856B) — el wrapper (.dd-btn-icon.dd-btn-icon--bare) solo lo alinea,
+       sin borde/circulo propio para no duplicarlo. Acá solo el tamaño. */
+    .servicios__card-btn-icon {
+        width: 52px;
+        height: 52px;
+    }
+
+    .servicios__card-btn-icon svg {
+        display: block;
+    }
+
+    /* Extracto + boton "Conoce más": solo en la tarjeta cerrada. */
+    .servicios__card[open] .servicios__card-content,
+    .servicios__card[open] .servicios__card-cta {
+        display: none;
+    }
+
+    /* ── Flecha del toggle (arriba a la derecha) ─────────────────────────── */
+    .servicios__card-toggle {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        border: 1.5px solid currentColor;
+    }
+
+    .servicios__card[open] .servicios__card-toggle {
+        display: inline-flex;
+    }
+
+    /* ── Contenido desplegado (the_content del servicio) ─────────────────── */
+    .servicios__card-detail {
+        margin-top: 20px;
+    }
+
+    .servicios__card-detail-content {
+        font-family: 'Golos Text', sans-serif;
+        font-size: var(--text-body, 18px);
+        line-height: 1.6;
+    }
+
+    .servicios__card-detail-content > * {
+        margin: 0 0 16px;
+    }
+
+    .servicios__card-detail-content > *:last-child {
+        margin-bottom: 0;
+    }
+
+    .servicios__card-detail-content img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    .servicios__card-detail-content ul {
+        padding-left: 20px;
+        list-style: disc;
+    }
+
+    .servicios__card-detail-content li {
+        margin-bottom: 8px;
+    }
+
+    .servicios__card-detail-content em {
+        font-family: 'Instrument Serif', serif;
+    }
+
+    .servicios__card-detail-cta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 24px;
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+        .servicios__grid {
+            grid-template-columns: 1fr;
+        }
+
+        .servicios__header {
+            grid-template-columns: 1fr;
+            align-items: start;
+            gap: 16px;
+        }
+
+        .servicios__title {
+            font-size: var(--text-h2, 32px);
+        }
+    }
+
+    @media (max-width: 767px) {
+        .servicios__container {
+            padding-inline: var(--section-padding-x-mobile, 30px);
+        }
+
+        .servicios__floating-wrap {
+            display: none;
+        }
+
+        .servicios__card-btn {
+            width: auto;
+            flex: 1 1 auto;
+        }
+    }
+
+}

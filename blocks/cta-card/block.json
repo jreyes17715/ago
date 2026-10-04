@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "ago/cta-card",
+    "title": "Tarjeta CTA",
+    "category": "ago",
+    "icon": "index-card",
+    "description": "Tarjeta redondeada dentro del contenedor con imagen de fondo, título, contenido opcional y hasta dos botones (flecha, correo o teléfono).",
+    "textdomain": "ago",
+    "supports": {
+        "html": false
+    },
+    "attributes": {
+        "bgId":         { "type": "number",  "default": 0 },
+        "titleLight":   { "type": "string",  "default": "" },
+        "titleBold":    { "type": "string",  "default": "" },
+        "titleStacked": { "type": "boolean", "default": true },
+        "titleSize":    { "type": "string",  "default": "lg" },
+        "content":      { "type": "string",  "default": "" },
+        "btn1Text":     { "type": "string",  "default": "" },
+        "btn1Url":      { "type": "string",  "default": "" },
+        "btn1Variant":  { "type": "string",  "default": "light" },
+        "btn1Icon":     { "type": "string",  "default": "arrow" },
+        "btn2Text":     { "type": "string",  "default": "" },
+        "btn2Url":      { "type": "string",  "default": "" },
+        "btn2Variant":  { "type": "string",  "default": "light" },
+        "btn2Icon":     { "type": "string",  "default": "arrow" }
+    },
+    "render": "file:./render.php"
+}

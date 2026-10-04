@@ -1,0 +1,111 @@
+/* ==========================================================================
+   Marcas / Logos de clientes — AGO
+   ========================================================================== */
+
+@layer components {
+
+    .marcas {
+        position: relative;
+        padding-block: var(--section-padding-y, 60px);
+        background-color: #000;
+    }
+
+    /* ── Contenido ─────────────────────────────────────────────────────── */
+    .marcas__container {
+        position: relative;
+        z-index: 1;
+        max-width: var(--container-max, 1200px);
+        width: 100%;
+        margin-inline: auto;
+        padding-inline: var(--section-padding-x, 24px);
+        text-align: center;
+    }
+
+    /* ── Imagen flotante decorativa ───────────────────────────────────────
+       El centrado vertical vive en el wrapper (translateY fijo). El
+       parallax por JS se aplica solo a la imagen de adentro, para que
+       ambos transforms no se pisen entre si. Alineada al borde
+       izquierdo de la SECCION negra completa (no del contenedor de 1200px). ── */
+    .marcas__floating-wrap {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .marcas__floating {
+        display: block;
+        width: 260px;
+        will-change: transform;
+    }
+
+    .marcas__title {
+        margin: 0 0 48px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-h1, 48px);
+        line-height: 1.2;
+        color: var(--color-white, #fff);
+    }
+
+    /* ── Grid de logos ─────────────────────────────────────────────────── */
+    .marcas__grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px 24px;
+        align-items: center;
+        justify-items: center;
+    }
+
+    .marcas__logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 56px;
+    }
+
+    .marcas__logo a {
+        display: inline-flex;
+        transition: opacity 0.2s ease;
+    }
+
+    .marcas__logo a:hover {
+        opacity: 0.75;
+    }
+
+    .marcas__logo-img {
+        max-width: 100%;
+        max-height: 56px;
+        width: auto;
+        height: auto;
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+        .marcas__grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .marcas__title {
+            font-size: var(--text-h2, 32px);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .marcas__grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px 20px;
+        }
+
+        .marcas__floating {
+            width: 160px;
+        }
+
+        .marcas__container {
+            padding-inline: var(--section-padding-x-mobile, 30px);
+        }
+    }
+
+}

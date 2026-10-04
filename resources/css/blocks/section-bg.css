@@ -1,0 +1,70 @@
+/* ==========================================================================
+   Sección con fondo — AGO  (blocks/section-bg)
+   Contenedor a ancho completo que solo pinta el fondo detrás de los bloques
+   hijos. Cada hijo conserva su propio max-width y relleno; entre dos hijos
+   seguidos se colapsa el relleno duplicado (queda un solo
+   --section-padding-y en vez de dos).
+   ========================================================================== */
+
+@layer components {
+
+    .section-bg {
+        --section-bg-light: linear-gradient(
+            100deg,
+            color-mix(in srgb, var(--color-ago-navy) 7%, var(--color-white)) 0%,
+            color-mix(in srgb, var(--color-ago-navy) 3%, var(--color-white)) 100%
+        );   /* gris claro (aproximado del diseño, confirmar) */
+
+        --section-bg-deco-w: min(22vw, 440px);   /* ancho de las imágenes laterales (medido, confirmar) */
+
+        position: relative;
+        isolation: isolate;
+        width: 100%;
+        max-width: none;
+        margin-inline: 0;
+        overflow: hidden;
+    }
+
+    .section-bg--light { background: var(--section-bg-light); }
+    .section-bg--white { background: var(--color-white); }
+
+    .section-bg__img {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Imágenes decorativas: pegadas a los bordes, centradas verticalmente
+       respecto a toda la sección, detrás del contenido */
+    .section-bg__deco {
+        position: absolute;
+        top: 50%;
+        z-index: 0;
+        width: var(--section-bg-deco-w);
+        height: auto;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+    .section-bg__deco--left  { left: 0; }
+    .section-bg__deco--right { right: 0; }
+
+    .section-bg__inner {
+        position: relative;
+        z-index: 1;
+    }
+
+    @media (max-width: 781px) {
+        .section-bg__deco {
+            display: none;
+        }
+    }
+
+    /* Colapsa el relleno entre hijos consecutivos */
+    .section-bg__inner > * + * {
+        margin-top: calc(-1 * var(--section-padding-y));
+    }
+}

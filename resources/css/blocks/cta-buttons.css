@@ -1,0 +1,47 @@
+/* ==========================================================================
+   Frase + botones — AGO  (blocks/cta-buttons)
+   Frase centrada y hasta dos botones (átomo .ago-btn) debajo, centrados.
+   ========================================================================== */
+
+@layer components {
+
+    .cta-buttons {
+        --cta-buttons-gap: 48px;   /* separación entre botones (medido, confirmar) */
+
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding: var(--section-padding-y) var(--section-padding-x);
+        color: var(--color-ago-navy);
+        text-align: center;
+    }
+
+    .cta-buttons__title {
+        margin: 0 0 48px;
+        font-size: var(--text-subtitle);
+        font-weight: 700;
+        line-height: 1.2;
+        color: var(--color-ago-navy);
+    }
+
+    .cta-buttons__title:last-child {
+        margin-bottom: 0;
+    }
+
+    .cta-buttons__actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 24px var(--cta-buttons-gap);
+    }
+
+    @media (max-width: 781px) {
+        .cta-buttons {
+            padding-inline: var(--section-padding-x-mobile);
+        }
+
+        .cta-buttons__title {
+            margin-bottom: 32px;
+            font-size: var(--text-subtitle-mobile);
+        }
+    }
+}

@@ -1,0 +1,60 @@
+/* ==========================================================================
+   Cuadrícula de logos — AGO  (blocks/logo-grid)
+   --logo-grid-columns lo define el bloque (inline). Los logos que no caben
+   bajan a la siguiente fila y quedan centrados.
+   ========================================================================== */
+
+@layer components {
+
+    .logo-grid {
+        --logo-grid-gap:      48px;
+        --logo-grid-logo-h:   110px;   /* alto máximo de cada logo (medido, confirmar) */
+
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding: var(--section-padding-y) var(--section-padding-x);
+    }
+
+    .logo-grid__list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--logo-grid-gap);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .logo-grid__item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 calc((100% - (var(--logo-grid-columns, 3) - 1) * var(--logo-grid-gap)) / var(--logo-grid-columns, 3));
+        min-width: 0;
+    }
+
+    .logo-grid__link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logo-grid__img {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: var(--logo-grid-logo-h);
+        object-fit: contain;
+    }
+
+    @media (max-width: 781px) {
+        .logo-grid {
+            --logo-grid-columns: 2 !important;
+            --logo-grid-gap:     24px;
+            --logo-grid-logo-h:  70px;
+
+            padding-inline: var(--section-padding-x-mobile);
+        }
+    }
+}

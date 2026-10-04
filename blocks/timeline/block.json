@@ -1,0 +1,23 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "ago/timeline",
+    "title": "Línea de tiempo",
+    "category": "ago",
+    "icon": "backup",
+    "description": "Tarjetas con título, contenido y año. Alternan claro / oscuro automáticamente; pestaña redondeada bajo el año.",
+    "textdomain": "ago",
+    "supports": {
+        "html": false
+    },
+    "attributes": {
+        "items": {
+            "type": "array",
+            "default": [
+                { "title": "", "content": "", "year": "" },
+                { "title": "", "content": "", "year": "" }
+            ]
+        }
+    },
+    "render": "file:./render.php"
+}

@@ -1,0 +1,85 @@
+/* ==========================================================================
+   Banner CTA — AGO  (blocks/banner-cta)
+   Fondo de lado a lado (ignora --container-max). Sin degradado: la imagen
+   ya trae su propio color. El contenido sí se alinea al contenedor.
+   ========================================================================== */
+
+@layer components {
+
+    .banner-cta {
+        --banner-cta-min-height: 620px;   /* medido del diseño, confirmar */
+
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        max-width: none;
+        min-height: var(--banner-cta-min-height);
+        margin-inline: 0;
+        overflow: hidden;
+        background-color: var(--color-ago-navy);
+        color: var(--color-white);
+    }
+
+    .banner-cta__bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .banner-cta__inner {
+        width: 100%;
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding: var(--section-padding-y) var(--section-padding-x);
+    }
+
+    .banner-cta__title {
+        margin: 0 0 24px;
+        font-size: var(--text-h2);
+        line-height: 1.05;
+        color: var(--color-white);
+    }
+
+    .banner-cta__title-light {
+        display: block;
+        font-weight: 300;
+    }
+
+    .banner-cta__title-bold {
+        display: block;
+        font-weight: 800;
+    }
+
+    .banner-cta__text {
+        max-width: 800px;
+        margin: 0;
+        font-size: var(--text-body);
+        line-height: 1.25;
+    }
+
+    .banner-cta__text strong {
+        font-weight: 700;
+    }
+
+    .banner-cta__cta {
+        margin-top: 40px;
+    }
+
+    @media (max-width: 781px) {
+        .banner-cta {
+            --banner-cta-min-height: 0px;
+        }
+
+        .banner-cta__inner {
+            padding-inline: var(--section-padding-x-mobile);
+        }
+
+        .banner-cta__title { font-size: var(--text-h2-mobile); }
+        .banner-cta__text  { font-size: var(--text-body-mobile); }
+    }
+}

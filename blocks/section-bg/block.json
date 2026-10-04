@@ -1,0 +1,22 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "ago/section-bg",
+    "title": "Sección con fondo",
+    "category": "ago",
+    "icon": "cover-image",
+    "description": "Contenedor a ancho completo que solo pone el fondo (color o imagen) y, opcional, imágenes decorativas a los lados centradas verticalmente. Adentro acepta cualquier bloque (ej. Encabezado de sección + Equipo).",
+    "textdomain": "ago",
+    "supports": {
+        "html": false,
+        "align": [ "full" ]
+    },
+    "attributes": {
+        "align":     { "type": "string", "default": "full" },
+        "bg":        { "type": "string", "default": "light" },
+        "bgImageId": { "type": "number", "default": 0 },
+        "decoLeftId":  { "type": "number", "default": 0 },
+        "decoRightId": { "type": "number", "default": 0 }
+    },
+    "render": "file:./render.php"
+}

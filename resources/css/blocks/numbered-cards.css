@@ -1,0 +1,146 @@
+/* ==========================================================================
+   Tarjetas numeradas — AGO  (blocks/numbered-cards)
+   - Alternan blanco / azul con :nth-child.
+   - Esquina inferior derecha recortada (curva en 2 tramos) con mask SVG
+     anclada abajo a la derecha → funciona con cualquier tamaño de tarjeta.
+   - Borde de la tarjeta blanca: .numbered-cards__card pinta el color del
+     borde y .numbered-cards__inner (1px adentro) el fondo; ambos con la misma
+     máscara, así el borde sigue también la curva.
+   ========================================================================== */
+
+@layer components {
+
+    .numbered-cards {
+        --nc-gap:       28px;
+        --nc-radius:    18px;
+        --nc-corner-w:  60px;   /* ancho del recorte de la esquina (medido, confirmar) */
+        --nc-corner-h:  65px;   /* alto del recorte                (medido, confirmar) */
+        --nc-corner: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 65' preserveAspectRatio='none'%3E%3Cpath d='M60 0C60 8 58 11 54 13L36 23C33 25 31 27 29 31L13 59C11 63 8 65 3 65H60Z'/%3E%3C/svg%3E");
+
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding: var(--section-padding-y) var(--section-padding-x);
+    }
+
+    .numbered-cards__list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--nc-gap);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    /* ── Tarjeta: variante blanca (impares) ───────────────────────── */
+    .numbered-cards__item {
+        --nc-bg:     var(--color-white);
+        --nc-border: color-mix(in srgb, var(--color-ago-navy) 14%, var(--color-white));
+        --nc-fg:     var(--color-ago-navy);
+        --nc-num:    color-mix(in srgb, var(--color-ago-blue) 22%, var(--color-white));
+
+        position: relative;
+        display: flex;
+        flex: 0 0 calc((100% - (var(--nc-columns, 3) - 1) * var(--nc-gap)) / var(--nc-columns, 3));
+        min-width: 0;
+        filter: drop-shadow(0 6px 14px rgb(0 0 0 / 0.04));
+    }
+
+    /* Variante azul (pares) */
+    .numbered-cards__item:nth-child(even) {
+        --nc-bg:     var(--color-ago-navy);
+        --nc-border: var(--color-ago-navy);
+        --nc-fg:     var(--color-white);
+        --nc-num:    var(--color-white);
+    }
+
+    .numbered-cards__card,
+    .numbered-cards__inner {
+        /* La esquina inf. der. queda oculta por el recorte: sin radio ahí
+           (evita un arco residual del antialias). */
+        border-radius: var(--nc-radius) var(--nc-radius) 0 var(--nc-radius);
+        -webkit-mask:
+            linear-gradient(#000 0 0),
+            var(--nc-corner) right -1px bottom -1px / calc(var(--nc-corner-w) + 1px) calc(var(--nc-corner-h) + 1px) no-repeat;
+        -webkit-mask-composite: xor;
+        mask:
+            linear-gradient(#000 0 0),
+            var(--nc-corner) right -1px bottom -1px / calc(var(--nc-corner-w) + 1px) calc(var(--nc-corner-h) + 1px) no-repeat;
+        mask-composite: exclude;
+    }
+
+    .numbered-cards__card {
+        display: flex;
+        flex: 1;
+        padding: 1px;                          /* = grosor del borde */
+        background-color: var(--nc-border);
+    }
+
+    .numbered-cards__inner {
+        position: relative;
+        flex: 1;
+        padding: 24px 28px 48px;
+        border-radius: calc(var(--nc-radius) - 1px) calc(var(--nc-radius) - 1px) 0 calc(var(--nc-radius) - 1px);
+        background-color: var(--nc-bg);
+        color: var(--nc-fg);
+    }
+
+    /* ── Contenido ────────────────────────────────────────────────── */
+    .numbered-cards__number {
+        display: block;
+        margin-bottom: 8px;
+        font-size: var(--text-h2);
+        font-weight: 800;
+        line-height: 1;
+        text-align: right;
+        color: var(--nc-num);
+    }
+
+    .numbered-cards__title {
+        margin: 0 0 24px;
+        font-size: var(--text-subtitle);
+        font-weight: 700;
+        line-height: 1.2;
+        color: inherit;
+    }
+
+    .numbered-cards__text {
+        margin: 0;
+        padding-right: calc(var(--nc-corner-w) * 0.4);   /* que el texto no toque el recorte */
+        font-size: var(--text-small);
+        line-height: 1.3;
+    }
+
+    /* Herramientas (solo editor) */
+    .numbered-cards__tools {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        z-index: 2;
+        display: flex;
+        gap: 2px;
+        border-radius: 6px;
+        background-color: var(--color-white);
+    }
+
+    /* ── Responsive ───────────────────────────────────────────────── */
+    @media (max-width: 1023px) {
+        .numbered-cards__item {
+            flex-basis: calc((100% - var(--nc-gap)) / 2);
+        }
+    }
+
+    @media (max-width: 781px) {
+        .numbered-cards {
+            padding-inline: var(--section-padding-x-mobile);
+        }
+
+        .numbered-cards__item {
+            flex-basis: 100%;
+        }
+
+        .numbered-cards__number { font-size: var(--text-h2-mobile); }
+        .numbered-cards__title  { font-size: var(--text-subtitle-mobile); }
+        .numbered-cards__text   { font-size: 1rem; }
+    }
+}

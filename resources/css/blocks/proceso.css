@@ -1,0 +1,169 @@
+/* ==========================================================================
+   Nuestro Proceso — AGO
+   Columna de texto (titulo/contenido con acento + boton "Ver video") +
+   columna de pasos numerados (pills) + fondo decorativo opcional en la
+   esquina superior derecha + 2 imagenes flotantes con parallax que sangran
+   fuera del bloque, mismo patron que blocks/hero (offset negativo fijo, sin
+   overflow:hidden en la seccion, z-index:1 para pintarse sobre lo que sigue).
+   ========================================================================== */
+
+@layer components {
+
+    .proceso {
+        position: relative;
+        padding-block: var(--section-padding-y, 60px);
+        /* Extra abajo: dejar aire para que las imagenes flotantes que
+           sangran (bottom negativo) no queden pegadas al siguiente bloque. */
+        padding-bottom: calc(var(--section-padding-y, 60px) + 60px);
+        background-color: var(--color-white, #fff);
+        background-repeat: no-repeat;
+        background-position: top right;
+        background-size: auto;
+    }
+
+    /* ── Imagenes flotantes (parallax, sangran fuera del bloque) ─────────── */
+    .proceso__floating {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+        filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.18));
+        will-change: transform;
+    }
+
+    /* Offset negativo fijo (no %) a proposito, igual que .hero__floating--2/3:
+       "sangra" fuera del bloque, encima de la seccion siguiente, de forma
+       consistente sin importar el alto de pantalla. */
+    .proceso__floating--1 {
+        bottom: -50px;
+        left: 4%;
+        width: 260px;
+    }
+
+    .proceso__floating--2 {
+        bottom: -70px;
+        right: 4%;
+        width: 260px;
+    }
+
+    /* ── Contenido ─────────────────────────────────────────────────────── */
+    .proceso__container {
+        position: relative;
+        z-index: 2;
+        max-width: var(--container-max, 1200px);
+        width: 100%;
+        margin-inline: auto;
+        padding-inline: var(--section-padding-x, 24px);
+    }
+
+    .proceso__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 64px;
+    }
+
+    /* ── Columna de texto ─────────────────────────────────────────────────── */
+    .proceso__col-text {
+        max-width: 520px;
+    }
+
+    .proceso__title {
+        margin: 0 0 20px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-h1, 48px);
+        line-height: 1.1;
+        text-transform: uppercase;
+        color: var(--color-orange, #E65924);
+    }
+
+    .proceso__title .hero-accent {
+        text-transform: none;
+    }
+
+    .proceso__content {
+        margin: 0 0 32px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 400;
+        font-size: var(--text-body, 18px);
+        line-height: 1.6;
+        color: var(--color-text-body, #4A4A4A);
+    }
+
+    .proceso__content strong {
+        font-weight: 700;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    .proceso__cta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    /* ── Columna de pasos (pills numeradas) ───────────────────────────────── */
+    .proceso__steps {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .proceso__step {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 20px 28px;
+        border: 1.5px solid var(--color-text-dark, #1A1A1A);
+        border-radius: 40px;
+        background-color: var(--color-white, #fff);
+    }
+
+    .proceso__step-number,
+    .proceso__step-text {
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-body, 18px);
+        line-height: 1.3;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    .proceso__step-number {
+        flex-shrink: 0;
+        opacity: 0.7;
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+        .proceso__grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .proceso__col-text {
+            max-width: none;
+        }
+
+        .proceso__title {
+            font-size: var(--text-h2, 32px);
+        }
+    }
+
+    @media (max-width: 767px) {
+        .proceso__container {
+            padding-inline: var(--section-padding-x-mobile, 30px);
+        }
+
+        /* Igual que en hero: se ocultan en mobile para priorizar el contenido. */
+        .proceso__floating {
+            display: none;
+        }
+
+        .proceso__step {
+            padding: 16px 20px;
+        }
+    }
+
+}

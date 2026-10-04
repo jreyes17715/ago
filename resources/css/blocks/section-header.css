@@ -1,0 +1,143 @@
+/* ==========================================================================
+   Encabezado de sección — AGO  (blocks/section-header)
+   --side   : texto alineado al contenedor (izquierda), imagen a la derecha
+              pegada al borde de la pantalla.
+   --center : texto centrado, imágenes pegadas a ambos bordes.
+   Las imágenes son decorativas (absolutas): se ajustan al alto de la sección
+   sin deformarse. En mobile se ocultan.
+   ========================================================================== */
+
+@layer components {
+
+    .section-header {
+        --section-header-img-w:      min(38vw, 740px);   /* variante side   (medido, confirmar) */
+        --section-header-side-img-w: min(22vw, 440px);   /* variante center (medido, confirmar) */
+        --section-header-text-max:   720px;
+        --section-header-img-min-h:  150px;              /* alto mínimo de las grecas (variante center) */
+
+        position: relative;
+        width: 100%;
+        max-width: none;
+        margin-inline: 0;
+        overflow: hidden;
+        background-color: transparent;   /* deja ver el fondo de "Sección con fondo" */
+        color: var(--color-ago-navy);
+    }
+
+    .section-header__inner {
+        position: relative;
+        z-index: 1;
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding: var(--section-padding-y) var(--section-padding-x);
+    }
+
+    .section-header__body {
+        max-width: var(--section-header-text-max);
+    }
+
+    .section-header__title {
+        margin-bottom: 40px;
+    }
+
+    .section-header__title:last-child {
+        margin-bottom: 0;
+    }
+
+    /* ── Contenido (párrafos y listas de los bloques core) ────────── */
+    .section-header__content {
+        font-size: var(--text-body);
+        line-height: 1.25;
+    }
+
+    .section-header__content > * {
+        margin: 0 0 1em;
+    }
+
+    .section-header__content > *:last-child {
+        margin-bottom: 0;
+    }
+
+    .section-header__content ul { list-style: disc;    padding-left: 1.2em; }
+    .section-header__content ol { list-style: decimal; padding-left: 1.2em; }
+
+    /* ── Imágenes decorativas ─────────────────────────────────────── */
+    .section-header__img {
+        position: absolute;
+        inset-block: var(--section-padding-y);
+        height: calc(100% - var(--section-padding-y) * 2);
+        object-fit: contain;
+        pointer-events: none;
+    }
+
+    .section-header__img--right {
+        right: 0;
+        object-position: right top;
+    }
+
+    .section-header__img--left {
+        left: 0;
+        object-position: left center;
+    }
+
+    .section-header--side .section-header__img--right {
+        width: var(--section-header-img-w);
+    }
+
+    /* ── Variante center ──────────────────────────────────────────── */
+    .section-header--center .section-header__img {
+        width: var(--section-header-side-img-w);
+    }
+
+    .section-header--center .section-header__img--right {
+        object-position: right center;
+    }
+
+    .section-header--center .section-header__inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: calc(var(--section-header-img-min-h) + var(--section-padding-y) * 2);
+        max-width: none;
+        padding-inline: calc(var(--section-header-side-img-w) + 40px);
+        text-align: center;
+    }
+
+    .section-header--center .section-header__body {
+        margin-inline: auto;
+    }
+
+    .section-header--center .section-header__content ul,
+    .section-header--center .section-header__content ol {
+        display: inline-block;
+        text-align: left;
+    }
+
+    /* ── Pantallas medianas: el texto no se monta sobre la imagen ─── */
+    @media (max-width: 1279px) {
+        .section-header--side .section-header__body {
+            max-width: min(var(--section-header-text-max), calc(100% - var(--section-header-img-w) + var(--section-padding-x)));
+        }
+    }
+
+    /* ── Mobile: sin imágenes decorativas ─────────────────────────── */
+    @media (max-width: 781px) {
+        .section-header__img {
+            display: none;
+        }
+
+        .section-header__inner,
+        .section-header--center .section-header__inner {
+            min-height: 0;
+            padding-inline: var(--section-padding-x-mobile);
+        }
+
+        .section-header--side .section-header__body {
+            max-width: none;
+        }
+
+        .section-header__content {
+            font-size: var(--text-body-mobile);
+        }
+    }
+}

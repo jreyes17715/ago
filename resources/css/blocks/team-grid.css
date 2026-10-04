@@ -1,0 +1,314 @@
+/* ==========================================================================
+   Equipo (junta directiva) — AGO  (blocks/team-grid)
+
+   Cada tarjeta = 2 capas:
+   1) .team-grid__photo  → foto con esquinas redondeadas y la esquina
+                            inferior izquierda cortada en diagonal (45°).
+   2) .team-grid__panel  → panel blanco encima de la parte baja de la foto:
+                            rectángulo con las 4 esquinas redondeadas y el
+                            LADO IZQUIERDO INCLINADO (arriba más a la
+                            izquierda, abajo más a la derecha). Se arma con
+                            2 capas blancas: ::before inclinado (skewX) y
+                            ::after recto para el lado derecho.
+   Todos los cortes/medidas son variables → se ajustan sin tocar la lógica.
+   ========================================================================== */
+
+@layer components {
+
+    .team-grid {
+        --tg-gap:          32px;
+        --tg-ratio:        424 / 440;   /* proporción de la foto (Figma 424×440) */
+        --tg-wh:           0.9636;      /* ancho ÷ alto (424/440) → mantiene el corte a 45° */
+        --tg-radius:       20px;
+        --tg-photo-cut:    20%;         /* corte diagonal de la foto (medido, confirmar) */
+        --tg-panel-left:   8%;          /* cuánto entra el panel desde la izquierda */
+        --tg-panel-bottom: 6%;          /* franja de foto visible bajo el panel */
+        --tg-panel-skew:   38deg;       /* inclinación del lado izquierdo del panel (medido, confirmar) */
+        --tg-panel-pad:    72px;        /* sangría del texto para librar la inclinación */
+        --tg-panel-radius: 22px;
+        --tg-name-size:    1.25rem;     /* 20px — nombre (medido, confirmar) */
+        --tg-quote-size:   1.5rem;      /* 24px — cita del reverso (medido, confirmar) */
+        --tg-flip-speed:   0.7s;
+
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding: var(--section-padding-y) var(--section-padding-x);
+        color: var(--color-ago-navy);
+    }
+
+    .team-grid__title {
+        margin: 0 0 40px;
+        font-size: var(--text-subtitle);
+        font-weight: 700;
+        line-height: 1.2;
+        text-align: center;
+        color: var(--color-ago-navy);
+    }
+
+    .team-grid__list {
+        display: grid;
+        grid-template-columns: repeat(var(--tg-columns, 3), minmax(0, 1fr));
+        gap: var(--tg-gap);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .team-grid__item {
+        /* Forma de la foto (y del reverso): esquinas redondeadas + corte inf. izq. */
+        --tg-shape: polygon(
+            0 0,
+            100% 0,
+            100% 100%,
+            var(--tg-photo-cut) 100%,
+            0 calc(100% - var(--tg-photo-cut) * var(--tg-wh))
+        );
+
+        position: relative;
+        aspect-ratio: var(--tg-ratio);
+        perspective: 1600px;
+    }
+
+    /* ── Flip (solo tarjetas con cita) ────────────────────────────── */
+    .team-grid__flipper {
+        position: absolute;
+        inset: 0;
+        transform-style: preserve-3d;
+        transition: transform var(--tg-flip-speed) cubic-bezier(0.4, 0.2, 0.2, 1);
+    }
+
+    .team-grid__face {
+        position: absolute;
+        inset: 0;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+
+    .team-grid__face--back {
+        display: flex;
+        align-items: center;
+        padding: 14% 12%;
+        border-radius: var(--tg-radius);
+        background-color: var(--color-ago-navy);
+        color: var(--color-white);
+        clip-path: var(--tg-shape);
+        transform: rotateY(180deg);
+    }
+
+    .team-grid__item--flip {
+        cursor: pointer;
+        outline: none;
+    }
+
+    .team-grid__item--flip:hover .team-grid__flipper,
+    .team-grid__item--flip:focus-visible .team-grid__flipper,
+    .team-grid__item--flip:focus-within .team-grid__flipper {
+        transform: rotateY(180deg);
+    }
+
+    .team-grid__quote {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: var(--tg-quote-size);
+        font-weight: 300;
+        line-height: 1.15;
+        color: inherit;
+    }
+
+    .team-grid__quote strong,
+    .team-grid__quote b {
+        font-weight: 700;
+    }
+
+    /* Sin animación 3D para quien la desactiva: cambio con fundido */
+    @media (prefers-reduced-motion: reduce) {
+        .team-grid__flipper {
+            transition: none;
+        }
+
+        .team-grid__item--flip:hover .team-grid__flipper,
+        .team-grid__item--flip:focus-visible .team-grid__flipper,
+        .team-grid__item--flip:focus-within .team-grid__flipper {
+            transform: none;
+        }
+
+        .team-grid__face--back {
+            opacity: 0;
+            transform: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .team-grid__item--flip:hover .team-grid__face--back,
+        .team-grid__item--flip:focus-within .team-grid__face--back {
+            opacity: 1;
+        }
+    }
+
+    /* ── 1) Foto con corte inferior izquierdo ─────────────────────── */
+    .team-grid__photo {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        border-radius: var(--tg-radius);
+        background-color: color-mix(in srgb, var(--color-ago-blue) 25%, var(--color-white));
+        clip-path: var(--tg-shape);
+    }
+
+    .team-grid__img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+    }
+
+    /* ── 2) Panel blanco con puesto + nombre ──────────────────────── */
+    .team-grid__panel {
+        position: absolute;
+        left: var(--tg-panel-left);
+        right: 0;
+        bottom: var(--tg-panel-bottom);
+        z-index: 1;
+        isolation: isolate;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 22px 24px 22px var(--tg-panel-pad);
+    }
+
+    /* Capa inclinada: da el lado izquierdo "\" con esquinas redondeadas */
+    .team-grid__panel::before,
+    .team-grid__panel::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: -1;
+        border-radius: var(--tg-panel-radius);
+        background-color: var(--color-white);
+    }
+
+    .team-grid__panel::before {
+        left: 0;
+        width: 60%;
+        transform-origin: top left;
+        transform: skewX(var(--tg-panel-skew));
+    }
+
+    /* Capa recta: lado derecho vertical, esquinas derechas rectas */
+    .team-grid__panel::after {
+        left: 35%;
+        right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .team-grid__role {
+        display: inline-block;
+        padding: 6px 22px;
+        border-radius: 9999px;
+        background-color: var(--color-ago-navy);
+        color: var(--color-white);
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    .team-grid__name {
+        margin: 0;
+        font-size: var(--tg-name-size);
+        font-weight: 500;
+        line-height: 1.2;
+        color: var(--color-ago-navy);
+    }
+
+    /* ── Variante: nombre centrado en negrita (sin puesto) ────────── */
+    .team-grid--name-centered .team-grid__panel {
+        align-items: center;
+        justify-content: center;
+        min-height: 26%;
+        padding-right: 32px;
+        text-align: center;
+    }
+
+    .team-grid--name-centered .team-grid__name {
+        font-weight: 700;
+    }
+
+    /* ── Solo editor ──────────────────────────────────────────────── */
+    .team-grid__pick {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        color: var(--color-ago-navy);
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    /* Campo de la cita (solo editor): debajo de la tarjeta */
+    .team-grid__item:has(.team-grid__quote-edit) {
+        margin-bottom: 130px;
+    }
+
+    .team-grid__quote-edit {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 0;
+        right: 0;
+        padding: 10px 12px;
+        border: 1px dashed color-mix(in srgb, var(--color-ago-navy) 30%, var(--color-white));
+        border-radius: 8px;
+        font-size: 0.95rem;
+    }
+
+    .team-grid__quote-edit p {
+        margin: 4px 0 0;
+    }
+
+    .team-grid__quote-edit-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        opacity: 0.6;
+    }
+
+    .team-grid__tools {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        z-index: 2;
+        display: flex;
+        gap: 2px;
+        border-radius: 6px;
+        background-color: var(--color-white);
+    }
+
+    /* ── Responsive ───────────────────────────────────────────────── */
+    @media (max-width: 1023px) {
+        .team-grid__list {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 781px) {
+        .team-grid {
+            padding-inline: var(--section-padding-x-mobile);
+        }
+
+        .team-grid__list {
+            grid-template-columns: minmax(0, 1fr);
+            max-width: 424px;
+            margin-inline: auto;
+        }
+
+        .team-grid__title {
+            font-size: var(--text-subtitle-mobile);
+        }
+    }
+}

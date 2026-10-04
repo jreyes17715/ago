@@ -1,0 +1,237 @@
+/* ==========================================================================
+   Blog — Listado — AGO
+   Va debajo de Header Blog en la pagina "Blog". Fila de categorias (filtro
+   real por URL, scroll horizontal simple — no hace falta Swiper porque son
+   links de navegacion, no un carrusel decorativo) + grid de tarjetas
+   (imagen destacada, categoria, fecha, titulo, extracto, boton "Leer blog")
+   + paginacion.
+   ========================================================================== */
+
+@layer components {
+
+    .blog-listing {
+        position: relative;
+        padding-block: var(--section-padding-y, 60px);
+        background-color: var(--color-white, #fff);
+    }
+
+    .blog-listing__container {
+        max-width: var(--container-max, 1200px);
+        width: 100%;
+        margin-inline: auto;
+        padding-inline: var(--section-padding-x, 24px);
+    }
+
+    /* ── Fila de categorias ────────────────────────────────────────────────
+       Scroll horizontal simple (sin Swiper): son links reales de
+       navegacion, no slides decorativos. Scrollbar oculta para que se vea
+       como el "carrusel" del diseño sin la complejidad de Swiper sobre
+       elementos <a> de navegacion real. ────────────────────────────────── */
+    .blog-listing__filters {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 40px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .blog-listing__filters::-webkit-scrollbar {
+        display: none;
+    }
+
+    .blog-listing__filter {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        height: 46px;
+        padding: 0 24px;
+        border: 1.5px solid var(--color-text-dark, #1A1A1A);
+        border-radius: 23px;
+        background-color: var(--color-white, #fff);
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: var(--color-text-dark, #1A1A1A);
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .blog-listing__filter:hover {
+        border-color: var(--color-green, #2C856B);
+    }
+
+    .blog-listing__filter.is-active {
+        border-color: var(--color-green-light, #BFFF70);
+        background-color: var(--color-green-light, #BFFF70);
+    }
+
+    /* ── Grid de tarjetas ──────────────────────────────────────────────── */
+    .blog-listing__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+
+    .blog-listing__card {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #E4E4E7;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: var(--color-white, #fff);
+    }
+
+    .blog-listing__card-media {
+        display: block;
+    }
+
+    .blog-listing__card-img {
+        object-fit: cover;
+        width: 100%;
+        height: 250px;
+        display: block;
+    }
+
+    .blog-listing__card-img--placeholder {
+        background-color: var(--color-bg-light, #F5F5F5);
+    }
+
+    .blog-listing__card-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        padding: 24px;
+    }
+
+    .blog-listing__card-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+
+    .blog-listing__card-category {
+        display: inline-flex;
+        align-items: center;
+        height: 28px;
+        padding: 0 14px;
+        border: 1.5px solid var(--color-text-dark, #1A1A1A);
+        border-radius: 14px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    .blog-listing__card-date {
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 400;
+        font-size: 13px;
+        color: var(--color-text-body, #4A4A4A);
+    }
+
+    .blog-listing__card-title {
+        margin: 0 0 12px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-card, 22px);
+        line-height: 1.3;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    .blog-listing__card-title a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .blog-listing__card-title a:hover {
+        text-decoration: underline;
+    }
+
+    .blog-listing__card-excerpt {
+        flex: 1 0 auto;
+        margin: 0 0 24px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 1.5;
+        color: var(--color-text-body, #4A4A4A);
+    }
+
+    .blog-listing__card-cta {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        margin-top: auto;
+    }
+
+    /* ── Paginacion ────────────────────────────────────────────────────── */
+    .blog-listing__pagination {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 48px;
+    }
+
+    .blog-listing__pagination .page-numbers {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+        padding: 0 12px;
+        border: 1px solid #E4E4E7;
+        border-radius: 8px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--color-text-dark, #1A1A1A);
+        text-decoration: none;
+    }
+
+    .blog-listing__pagination .page-numbers.current {
+        border-color: var(--color-text-dark, #1A1A1A);
+        background-color: var(--color-text-dark, #1A1A1A);
+        color: var(--color-white, #fff);
+    }
+
+    .blog-listing__pagination .page-numbers:not(.current):hover {
+        border-color: var(--color-text-dark, #1A1A1A);
+    }
+
+    .blog-listing__empty {
+        font-family: 'Golos Text', sans-serif;
+        font-size: var(--text-body, 18px);
+        color: var(--color-text-body, #4A4A4A);
+        text-align: center;
+        padding-block: 40px;
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+        .blog-listing__grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .blog-listing__container {
+            padding-inline: var(--section-padding-x-mobile, 30px);
+        }
+
+        .blog-listing__grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+}

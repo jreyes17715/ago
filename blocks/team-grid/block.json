@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "ago/team-grid",
+    "title": "Equipo (junta directiva)",
+    "category": "ago",
+    "icon": "groups",
+    "description": "Título (ej. periodo) + fotos con recorte diagonal y panel blanco con puesto y nombre.",
+    "textdomain": "ago",
+    "supports": {
+        "html": false
+    },
+    "attributes": {
+        "title":   { "type": "string", "default": "" },
+        "columns":   { "type": "number", "default": 3 },
+        "nameStyle": { "type": "string", "default": "default" },
+        "items": {
+            "type": "array",
+            "default": [
+                { "imageId": 0, "role": "", "name": "", "quote": "" },
+                { "imageId": 0, "role": "", "name": "", "quote": "" },
+                { "imageId": 0, "role": "", "name": "", "quote": "" }
+            ]
+        }
+    },
+    "render": "file:./render.php"
+}

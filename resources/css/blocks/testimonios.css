@@ -1,0 +1,193 @@
+/* ==========================================================================
+   Testimonios — AGO
+   Fondo de imagen administrable (a todo el bloque) + columna de texto con
+   acento + boton a otra plataforma + carrusel de fotos (Swiper), cada una
+   opcionalmente enlazada a su propio video. Paginacion tipo "barra" (no
+   dots redondos): un track blanco dividido en segmentos, el segmento
+   activo en negro.
+   ========================================================================== */
+
+@layer components {
+
+    .testimonios {
+        position: relative;
+        overflow: hidden;
+        padding-block: var(--section-padding-y, 60px);
+        background-color: var(--color-orange, #E65924);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .testimonios__container {
+        position: relative;
+        z-index: 1;
+        max-width: var(--container-max, 1200px);
+        width: 100%;
+        margin-inline: auto;
+        padding-inline: var(--section-padding-x, 24px);
+    }
+
+    .testimonios__grid {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 64px;
+    }
+
+    /* ── Columna de texto ─────────────────────────────────────────────────── */
+    .testimonios__col-text {
+        max-width: 480px;
+    }
+
+    .testimonios__label {
+        margin: 0 0 16px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-white, #fff);
+    }
+
+    .testimonios__title {
+        margin: 0 0 20px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-h2, 32px);
+        line-height: 1.25;
+        color: var(--color-white, #fff);
+    }
+
+    .testimonios__content {
+        margin: 0 0 32px;
+        font-family: 'Golos Text', sans-serif;
+        font-style: italic;
+        font-weight: 400;
+        font-size: var(--text-body, 18px);
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .testimonios__content strong {
+        font-style: normal;
+        font-weight: 700;
+    }
+
+    .testimonios__cta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    /* ── Carrusel ──────────────────────────────────────────────────────────── */
+    .testimonios__col-carousel {
+        position: relative;
+        width: 340px;
+    }
+
+    .testimonios__swiper {
+        position: relative;
+        width: 100%;
+    }
+
+    .testimonios__slide {
+        width: 340px;
+    }
+
+    .testimonios__slide-link {
+        display: block;
+    }
+
+    .testimonios__slide-img {
+        display: block;
+        width: 340px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    /* Vista previa dentro del editor (sin Swiper, solo la primera foto). */
+    .testimonios__preview-track {
+        display: flex;
+        overflow-x: auto;
+        gap: 8px;
+    }
+
+    .testimonios__preview-track .testimonios__slide-img {
+        flex-shrink: 0;
+    }
+
+    /* Paginacion tipo "barra": track blanco continuo, cada bullet ocupa una
+       porcion pareja, el activo se pinta negro (en vez del punto redondo
+       tradicional de Swiper). */
+    .testimonios__pagination {
+        display: flex;
+        gap: 4px;
+        margin-top: 16px;
+        width: 100%;
+        height: 6px;
+    }
+
+    /* !important necesario: el CSS propio de Swiper (swiper-bundle.min.css,
+       cargado desde CDN sin @layer) no esta en ninguna capa, y una
+       declaracion sin capa le gana a cualquier declaracion en capa sin
+       importar la especificidad — por eso el bullet no tomaba estos colores
+       (se veia con el estilo por defecto de Swiper en vez de blanco/negro). */
+    .testimonios__pagination .swiper-pagination-bullet {
+        flex: 1 1 0 !important;
+        width: auto !important;
+        height: 6px !important;
+        margin: 0 !important;
+        border-radius: 3px !important;
+        background-color: #fff !important;
+        opacity: 1 !important;
+        transition: background-color 0.2s ease;
+    }
+
+    .testimonios__pagination .swiper-pagination-bullet-active {
+        background-color: #000 !important;
+    }
+
+    /* Flecha "siguiente" — circulo negro sobre la esquina superior derecha
+       de la foto (montado sobre el borde, no centrado verticalmente). */
+    .testimonios__next {
+        position: absolute;
+        top: 110px;
+        right: -22px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background-color: #000;
+        border: none;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────────────── */
+    @media (max-width: 960px) {
+        .testimonios__grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .testimonios__col-text {
+            max-width: none;
+        }
+
+        .testimonios__col-carousel {
+            width: 100%;
+            max-width: 340px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .testimonios__container {
+            padding-inline: var(--section-padding-x-mobile, 30px);
+        }
+    }
+
+}

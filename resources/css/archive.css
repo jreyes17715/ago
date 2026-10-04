@@ -1,0 +1,42 @@
+/* ==========================================================================
+   Archivo de categoria — AGO
+   Encabezado simple arriba de la grilla de blog-listing.css (archive.php).
+   No es un bloque administrable: el titulo es el nombre real de la
+   categoria (single_cat_title()), no hay campos que editar.
+   ========================================================================== */
+
+@layer components {
+
+    .archive-header {
+        padding-block: 60px 20px;
+        background-color: var(--color-white, #fff);
+    }
+
+    .archive-header__container {
+        max-width: var(--container-max, 1200px);
+        width: 100%;
+        margin-inline: auto;
+        padding-inline: var(--section-padding-x, 24px);
+    }
+
+    .archive-header__title {
+        margin: 0;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-h1, 48px);
+        line-height: 1.1;
+        text-transform: uppercase;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    @media (max-width: 767px) {
+        .archive-header__container {
+            padding-inline: var(--section-padding-x-mobile, 30px);
+        }
+
+        .archive-header__title {
+            font-size: var(--text-h2, 32px);
+        }
+    }
+
+}

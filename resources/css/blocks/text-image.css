@@ -1,0 +1,163 @@
+/* ==========================================================================
+   Texto + Imagen — AGO  (blocks/text-image)
+   Modificadores:
+     .text-image--side     título en la columna de texto (por defecto)
+     .text-image--top      título centrado arriba de las dos columnas
+     .text-image--reverse  imagen a la derecha
+   ========================================================================== */
+
+@layer components {
+
+    .text-image {
+        --text-image-gap: 80px;
+
+        background-color: transparent;   /* deja ver el fondo de "Sección con fondo" */
+        color: var(--color-ago-navy);
+    }
+
+    .text-image__inner {
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding: var(--section-padding-y) var(--section-padding-x);
+    }
+
+    .text-image__grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: center;
+        gap: var(--text-image-gap);
+    }
+
+    /* Título al lado: la columna de texto es más ancha que la imagen */
+    .text-image--side .text-image__grid {
+        grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    }
+
+    .text-image--side.text-image--reverse .text-image__grid {
+        grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    }
+
+    .text-image--reverse .text-image__media {
+        order: 2;
+    }
+
+    /* ── Título: parte fina + parte negrita ───────────────────────── */
+    .text-image__title {
+        margin: 0 0 32px;
+        font-size: var(--text-h1);
+        line-height: 1.05;
+        color: var(--color-ago-navy);
+    }
+
+    .text-image__title-light {
+        font-weight: 300;
+    }
+
+    .text-image__title-bold {
+        font-weight: 800;
+    }
+
+    .text-image__title-light + .text-image__title-bold::before {
+        content: " ";
+    }
+
+    .text-image__title--stacked .text-image__title-light {
+        display: block;
+    }
+
+    .text-image__title--stacked .text-image__title-light + .text-image__title-bold::before {
+        content: none;
+    }
+
+    .text-image--top .text-image__title {
+        margin-bottom: 60px;
+        text-align: center;
+    }
+
+    /* ── Imagen principal + secundaria superpuesta ────────────────── */
+    .text-image__media {
+        position: relative;
+    }
+
+    .text-image__img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius-media);
+        object-fit: cover;
+    }
+
+    .text-image__img-secondary {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 35%;
+        height: auto;
+        border: 6px solid var(--color-white);
+        border-radius: var(--radius-media);
+        object-fit: cover;
+    }
+
+    /* ── Contenido (párrafos y listas de los bloques core) ────────── */
+    .text-image__content {
+        font-size: var(--text-body);
+        line-height: 1.25;
+    }
+
+    .text-image__content > * {
+        margin: 0 0 1em;
+    }
+
+    .text-image__content > *:last-child {
+        margin-bottom: 0;
+    }
+
+    .text-image__content ul,
+    .text-image__content ol {
+        padding-left: 1.2em;
+    }
+
+    .text-image__content ul {
+        list-style: disc;
+    }
+
+    .text-image__content ol {
+        list-style: decimal;
+    }
+
+    .text-image__content li + li {
+        margin-top: 0.4em;
+    }
+
+    .text-image__cta {
+        margin-top: 48px;
+    }
+
+    /* ── Mobile: una columna, imagen arriba ───────────────────────── */
+    @media (max-width: 781px) {
+        .text-image {
+            --text-image-gap: 32px;
+        }
+
+        .text-image__inner {
+            padding-inline: var(--section-padding-x-mobile);
+        }
+
+        .text-image__grid,
+        .text-image--side .text-image__grid,
+        .text-image--side.text-image--reverse .text-image__grid {
+            grid-template-columns: 1fr;
+        }
+
+        .text-image--reverse .text-image__media {
+            order: 0;
+        }
+
+        .text-image__title { font-size: var(--text-h1-mobile); }
+        .text-image__content { font-size: var(--text-body-mobile); }
+
+        .text-image--top .text-image__title {
+            margin-bottom: 32px;
+        }
+    }
+}

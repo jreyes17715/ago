@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "ago/tab-card",
+    "title": "Tarjeta con encabezado",
+    "category": "ago",
+    "icon": "id",
+    "description": "Tarjeta con encabezado oscuro + flecha y contenido (párrafos, viñetas, negritas).",
+    "textdomain": "ago",
+    "parent": [ "ago/tab-cards" ],
+    "supports": {
+        "html": false,
+        "reusable": false
+    },
+    "attributes": {
+        "title": { "type": "string",  "default": "" },
+        "wide":  { "type": "boolean", "default": false }
+    },
+    "render": "file:./render.php"
+}

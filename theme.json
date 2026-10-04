@@ -1,0 +1,102 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/theme.json",
+    "version": 3,
+    "settings": {
+        "appearanceTools": true,
+        "color": {
+            "palette": [
+                {
+                    "slug": "ago-navy",
+                    "color": "#091628",
+                    "name": "Azul AGO (títulos)"
+                },
+                {
+                    "slug": "ago-blue",
+                    "color": "#003187",
+                    "name": "Azul AGO secundario"
+                },
+                {
+                    "slug": "white",
+                    "color": "#ffffff",
+                    "name": "Blanco"
+                }
+            ]
+        },
+        "typography": {
+            "fontFamilies": [
+                {
+                    "fontFamily": "Montserrat, sans-serif",
+                    "slug": "montserrat",
+                    "name": "Montserrat"
+                },
+                {
+                    "fontFamily": "'Open Sans', sans-serif",
+                    "slug": "open-sans",
+                    "name": "Open Sans"
+                },
+                {
+                    "fontFamily": "'Golos Text', sans-serif",
+                    "slug": "golos-text",
+                    "name": "Golos Text"
+                },
+                {
+                    "fontFamily": "'Instrument Serif', serif",
+                    "slug": "instrument-serif",
+                    "name": "Instrument Serif"
+                }
+            ],
+            "fontSizes": [
+                {
+                    "slug": "subtitle",
+                    "size": "1.5rem",
+                    "name": "Subtítulo (24px)"
+                },
+                {
+                    "slug": "btn",
+                    "size": "1.5rem",
+                    "name": "Botón (24px)"
+                },
+                {
+                    "slug": "body",
+                    "size": "1.5625rem",
+                    "name": "Contenido (25px)"
+                },
+                {
+                    "slug": "h2",
+                    "size": "3.75rem",
+                    "name": "Título (60px)"
+                },
+                {
+                    "slug": "h1",
+                    "size": "5rem",
+                    "name": "Título principal (80px)"
+                }
+            ]
+        },
+        "spacing": {
+            "units": [
+                "px",
+                "em",
+                "rem",
+                "%",
+                "vw"
+            ]
+        },
+        "layout": {
+            "contentSize": "800px",
+            "wideSize": "1200px"
+        }
+    },
+    "styles": {
+        "typography": {
+            "fontFamily": "var(--wp--preset--font-family--montserrat)",
+            "fontSize": "var(--wp--preset--font-size--body)",
+            "lineHeight": "1.7"
+        },
+        "color": {
+            "text": "var(--wp--preset--color--ago-navy)",
+            "background": "var(--wp--preset--color--white)"
+        },
+        "elements": {}
+    }
+}

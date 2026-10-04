@@ -1,0 +1,119 @@
+/* ==========================================================================
+   Contribuimos en — AGO
+   Franja de fondo solido (no administrable) + imagen flotante con parallax
+   (arriba izquierda) + titulo con acento morado + hasta 3 imagenes de los
+   Objetivos de Desarrollo Sostenible (subidas por el usuario).
+   ========================================================================== */
+
+@layer components {
+
+    .contribuimos {
+        position: relative;
+        overflow: hidden;
+        padding-block: var(--section-padding-y, 60px);
+        background-color: var(--color-bg-light, #F5F5F5);
+    }
+
+    /* ── Blob decorativo (borde derecho) ──────────────────────────────────── */
+    .contribuimos__blob {
+        position: absolute;
+        top: 50%;
+        right: -140px;
+        width: 340px;
+        height: 340px;
+        transform: translateY(-50%);
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.5;
+        pointer-events: none;
+        z-index: 0;
+        background: radial-gradient(circle, var(--color-purple, #6B3DFE) 0%, #4FA8FF 55%, transparent 75%);
+    }
+
+    /* ── Imagen flotante (parallax, arriba-izquierda) ─────────────────────── */
+    .contribuimos__floating {
+        position: absolute;
+        top: -36px;
+        left: 40px;
+        width: 130px;
+        z-index: 2;
+        pointer-events: none;
+        filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.25));
+        will-change: transform;
+    }
+
+    /* ── Contenido ─────────────────────────────────────────────────────────── */
+    .contribuimos__container {
+        position: relative;
+        z-index: 1;
+        max-width: var(--container-max, 1200px);
+        width: 100%;
+        margin-inline: auto;
+        padding-inline: var(--section-padding-x, 24px);
+    }
+
+    .contribuimos__grid {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+
+    .contribuimos__title {
+        margin: 0;
+        font-family: 'Instrument Serif', serif;
+        font-style: italic;
+        font-weight: 400;
+        font-size: var(--text-subtitle, 24px);
+        line-height: 1.3;
+        color: var(--color-purple, #6B3DFE);
+        font-size: 42px;
+    }
+
+    .contribuimos__goals {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex-shrink: 0;
+    }
+
+    .contribuimos__goal {
+        display: block;
+        width: 162px;
+        height:162px;
+        object-fit: cover;
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────────────── */
+    @media (max-width: 780px) {
+        .contribuimos__grid {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .contribuimos__floating {
+            width: 90px;
+            top: -24px;
+            left: 20px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .contribuimos__container {
+            padding-inline: var(--section-padding-x-mobile, 30px);
+        }
+
+        .contribuimos__goals {
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .contribuimos__goal {
+            width: 80px;
+            height: 80px;
+        }
+    }
+
+}

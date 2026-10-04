@@ -1,0 +1,23 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "ago/cta-buttons",
+    "title": "Frase + botones",
+    "category": "ago",
+    "icon": "button",
+    "description": "Frase o título corto centrado y hasta dos botones debajo.",
+    "textdomain": "ago",
+    "supports": {
+        "html": false
+    },
+    "attributes": {
+        "title":       { "type": "string", "default": "" },
+        "btn1Text":    { "type": "string", "default": "" },
+        "btn1Url":     { "type": "string", "default": "" },
+        "btn1Variant": { "type": "string", "default": "dark" },
+        "btn2Text":    { "type": "string", "default": "" },
+        "btn2Url":     { "type": "string", "default": "" },
+        "btn2Variant": { "type": "string", "default": "outline" }
+    },
+    "render": "file:./render.php"
+}

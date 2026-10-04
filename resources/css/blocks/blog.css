@@ -1,0 +1,185 @@
+/* ==========================================================================
+   Blog — AGO (entradas nativas de WordPress en carrusel)
+   ========================================================================== */
+
+@layer components {
+
+    .blog {
+        position: relative;
+        padding-block: var(--section-padding-y, 60px);
+        background-color: var(--color-white, #fff);
+    }
+
+    .blog__container {
+        max-width: var(--container-max, 1200px);
+        width: 100%;
+        margin-inline: auto;
+        padding-inline: var(--section-padding-x, 24px);
+    }
+
+    .blog__intro {
+        margin-bottom: 40px;
+        text-align: center;
+        display: none;
+    }
+
+    .blog__title {
+        margin: 0;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-h1, 48px);
+        line-height: 1.15;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    .blog__subtitle {
+        margin: 12px 0 0;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 400;
+        font-size: var(--text-body, 18px);
+        line-height: 1.5;
+        color: var(--color-text-body, #4A4A4A);
+    }
+
+    /* ── Carrusel (Swiper) ─────────────────────────────────────────────────
+       A proposito FUERA de .blog__container (ver render.php): debe ocupar
+       el ancho completo de la seccion, no el maximo de 1200px. ─────────── */
+    .blog__carousel-wrap {
+        width: 100%;
+    }
+
+    .blog__swiper {
+        width: 100%;
+        padding: 8px var(--section-padding-x, 24px) 48px;
+        overflow: hidden;
+    }
+
+    /* Carrusel "centrado": el slide activo (del medio) se ve mas chico,
+       los laterales quedan a tamaño completo — efecto inverso al carrusel
+       tipico donde el activo crece. Se escala el slide completo (no la
+       tarjeta) para no pisar el transform del hover en .blog__card. ────── */
+    .blog__slide {
+        height: auto;
+        transform: scale(1);
+        opacity: 1;
+        transition: transform 0.35s ease, opacity 0.35s ease;
+    }
+
+    .blog__swiper .swiper-slide-active {
+        transform: scale(0.82);
+        opacity: 0.92;
+    }
+
+    /* ── Tarjeta ───────────────────────────────────────────────────────── */
+    .blog__card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 16px;
+        border-radius: 12px;
+        background-color: var(--color-bg-light, #F5F5F5);
+        text-decoration: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .blog__card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .blog__card-media {
+        overflow: hidden;
+        border-radius: 8px;
+        aspect-ratio: 4 / 3;
+        background-color: var(--color-bg-light, #F5F5F5);
+    }
+
+    .blog__card-img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .blog__card-img--placeholder {
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+            45deg,
+            #e4e9f1,
+            #e4e9f1 10px,
+            #eef2f8 10px,
+            #eef2f8 20px
+        );
+    }
+
+    /* Texto de accesibilidad — el titulo de la entrada no se muestra
+       visualmente (solo la imagen), pero sigue disponible para lectores
+       de pantalla dentro de .blog__card. */
+    .screen-reader-text {
+        position: absolute !important;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(1px, 1px, 1px, 1px);
+        white-space: nowrap;
+    }
+
+    /* Paginacion Swiper */
+    .blog__swiper .swiper-pagination {
+        bottom: 0;
+    }
+
+    .blog__swiper .swiper-pagination-bullet {
+        background: var(--color-purple, #6B3DFE);
+        opacity: 0.3;
+    }
+
+    .blog__swiper .swiper-pagination-bullet-active {
+        opacity: 1;
+    }
+
+    .blog__empty {
+        text-align: center;
+        font-family: 'Golos Text', sans-serif;
+        color: var(--color-text-body, #4A4A4A);
+    }
+
+    /* ── Vista previa dentro del editor (ServerSideRender) ────────────────
+       En el admin las tarjetas no corren dentro de un Swiper (JS de frontend
+       no se ejecuta ahi), asi que se muestran en una fila con scroll simple. ── */
+    .blog__ssr-preview .swiper-wrapper {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+    }
+
+    .blog__ssr-preview .blog__slide {
+        flex: 0 0 260px;
+        width: 260px;
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+        .blog__title {
+            font-size: var(--text-h2, 32px);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .blog__container {
+            padding-inline: var(--section-padding-x-mobile, 30px);
+        }
+
+        .blog__swiper {
+            padding-inline: var(--section-padding-x-mobile, 30px);
+        }
+
+        /* Un solo slide visible en mobile: sin efecto de escala. */
+        .blog__swiper .swiper-slide-active {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+}

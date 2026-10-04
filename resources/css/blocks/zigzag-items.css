@@ -1,0 +1,159 @@
+/* ==========================================================================
+   Pilares en zigzag — AGO  (blocks/zigzag-items)
+   Impares: ícono → título → contenido.  Pares: título → contenido → ícono
+   (y arrancan un poco más abajo). Número automático en la esquina del círculo.
+   ========================================================================== */
+
+@layer components {
+
+    .zigzag-items {
+        --zz-circle:  150px;   /* círculo del ícono          (medido, confirmar) */
+        --zz-icon:    50%;     /* tamaño del ícono dentro    */
+        --zz-badge:   58px;    /* círculo del número         (medido, confirmar) */
+        --zz-offset:  64px;    /* cuánto bajan los ítems pares */
+        --zz-gap-x:   40px;
+        --zz-gap-y:   60px;
+
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding: var(--section-padding-y) var(--section-padding-x);
+        color: var(--color-ago-navy);
+        text-align: center;
+    }
+
+    .zigzag-items__list {
+        display: grid;
+        grid-template-columns: repeat(var(--zz-columns, 4), minmax(0, 1fr));
+        align-items: start;
+        gap: var(--zz-gap-y) var(--zz-gap-x);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .zigzag-items__item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+    }
+
+    /* Zigzag: los pares llevan el ícono abajo y arrancan más abajo */
+    .zigzag-items__item:nth-child(even) {
+        margin-top: var(--zz-offset);
+    }
+
+    .zigzag-items__item:nth-child(even) .zigzag-items__media {
+        order: 2;
+    }
+
+    /* ── Círculo + ícono + número ─────────────────────────────────── */
+    .zigzag-items__media {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: var(--zz-circle);
+        height: var(--zz-circle);
+        border: 1px solid color-mix(in srgb, var(--color-ago-navy) 12%, var(--color-white));
+        border-radius: 50%;
+        background-color: var(--color-white);
+    }
+
+    .zigzag-items__img {
+        display: block;
+        width: var(--zz-icon);
+        height: var(--zz-icon);
+        object-fit: contain;
+    }
+
+    .zigzag-items__number {
+        position: absolute;
+        right: calc(var(--zz-badge) * -0.25);
+        bottom: calc(var(--zz-badge) * 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--zz-badge);
+        height: var(--zz-badge);
+        border-radius: 50%;
+        background-color: var(--color-ago-blue);
+        color: var(--color-white);
+        font-size: 1.125rem;
+        font-weight: 500;
+        line-height: 1;
+    }
+
+    /* ── Texto ────────────────────────────────────────────────────── */
+    .zigzag-items__title {
+        margin: 0 0 16px;
+        font-size: var(--text-subtitle);
+        font-weight: 700;
+        line-height: 1.2;
+        color: var(--color-ago-navy);
+    }
+
+    .zigzag-items__text {
+        margin: 0;
+        font-size: var(--text-small);
+        line-height: 1.35;
+        color: var(--color-ago-blue);
+    }
+
+    /* ── Solo editor ──────────────────────────────────────────────── */
+    .zigzag-items__pick {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: none;
+        color: var(--color-ago-blue);
+        font-size: 2rem;
+        cursor: pointer;
+    }
+
+    .zigzag-items__tools {
+        position: absolute;
+        top: -8px;
+        right: 0;
+        display: flex;
+        gap: 2px;
+    }
+
+    /* ── Responsive: 2 columnas en tablet, 1 en móvil (sin zigzag) ── */
+    @media (max-width: 1023px) {
+        .zigzag-items__list {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 781px) {
+        .zigzag-items {
+            --zz-circle: 120px;
+            --zz-badge:  46px;
+
+            padding-inline: var(--section-padding-x-mobile);
+        }
+
+        .zigzag-items__list {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .zigzag-items__item:nth-child(even) {
+            margin-top: 0;
+        }
+
+        .zigzag-items__item:nth-child(even) .zigzag-items__media {
+            order: 0;
+        }
+
+        .zigzag-items__title { font-size: var(--text-subtitle-mobile); }
+        .zigzag-items__text  { font-size: 1rem; }
+    }
+}

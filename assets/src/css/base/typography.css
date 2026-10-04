@@ -1,0 +1,31 @@
+html {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: var(--color-bvt-gray-mid);
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--color-bvt-blue-dark);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h1 { font-size: var(--text-h1); }
+h2 { font-size: var(--text-h2); }
+h3 { font-size: var(--text-subtitle); }
+
+p {
+  font-size: var(--text-body);
+  line-height: 1.7;
+  color: var(--color-bvt-gray-mid);
+}
+
+a {
+  color: var(--color-bvt-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

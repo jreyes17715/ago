@@ -1,0 +1,14 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "ago/tab-cards",
+    "title": "Tarjetas con encabezado",
+    "category": "ago",
+    "icon": "columns",
+    "description": "Cuadrícula de tarjetas con encabezado oscuro y flecha (ej. Visión / Misión / Valores). Cada tarjeta admite párrafos, viñetas y negritas.",
+    "textdomain": "ago",
+    "supports": {
+        "html": false
+    },
+    "render": "file:./render.php"
+}

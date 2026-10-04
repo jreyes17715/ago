@@ -1,0 +1,50 @@
+@import 'tailwindcss';
+@import './theme.css';
+@import './utilities.css';
+@import './custom.css' layer(utilities);
+@import './components/buttons.css';
+@import './atoms/title.css';
+@import './components/header.css';
+@import './footer.css';
+
+/* ── Bloques (uno por archivo, mismo nombre que /blocks/<nombre>/) ── */
+@import './blocks/hero.css';
+@import './blocks/text-image.css';
+@import './blocks/banner-cta.css';
+@import './blocks/section-header.css';
+@import './blocks/logo-grid.css';
+@import './blocks/point-list.css';
+@import './blocks/cta-buttons.css';
+@import './blocks/cta-card.css';
+@import './blocks/timeline.css';
+@import './blocks/zigzag-items.css';
+@import './blocks/tab-cards.css';
+@import './blocks/team-grid.css';
+@import './blocks/section-bg.css';
+@import './blocks/numbered-cards.css';
+
+@source '../../vendor/tailpress/framework/**/*.php';
+@source '../../vendor/tailpress/framework/**/**/*.php';
+
+@utility container {
+    margin-inline: auto;
+    padding-inline: 2rem;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-zinc-200, currentColor);
+  }
+}

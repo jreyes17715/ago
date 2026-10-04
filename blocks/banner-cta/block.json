@@ -1,0 +1,25 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "ago/banner-cta",
+    "title": "Banner CTA",
+    "category": "ago",
+    "icon": "megaphone",
+    "description": "Banner de lado a lado con imagen de fondo, título (fino + negrita), contenido con negritas y botón.",
+    "textdomain": "ago",
+    "supports": {
+        "html": false,
+        "align": [ "full" ]
+    },
+    "attributes": {
+        "align":      { "type": "string",  "default": "full" },
+        "bgId":       { "type": "number",  "default": 0 },
+        "titleLight": { "type": "string",  "default": "" },
+        "titleBold":  { "type": "string",  "default": "" },
+        "content":    { "type": "string",  "default": "" },
+        "btnText":    { "type": "string",  "default": "" },
+        "btnUrl":     { "type": "string",  "default": "" },
+        "btnVariant": { "type": "string",  "default": "light" }
+    },
+    "render": "file:./render.php"
+}

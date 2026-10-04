@@ -1,0 +1,160 @@
+/* ==========================================================================
+   Tarifas — AGO
+   Fondo administrable (a todo el bloque, sin graficos armados por el tema)
+   + columna de texto (titulo + subtitulo con acento) + espacio para un
+   video (archivo propio o link embebido de otra plataforma).
+   ========================================================================== */
+
+@layer components {
+
+    .tarifas {
+        position: relative;
+        padding-block: var(--section-padding-y, 60px);
+        background-color: var(--color-bg-light, #F5F5F5);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .tarifas__container {
+        position: relative;
+        z-index: 1;
+        max-width: var(--container-max, 1200px);
+        width: 100%;
+        margin-inline: auto;
+        padding-inline: var(--section-padding-x, 24px);
+    }
+
+    .tarifas__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 48px;
+    }
+
+    /* ── Columna de texto ─────────────────────────────────────────────────── */
+    .tarifas__col-text {
+        max-width: 480px;
+    }
+
+    .tarifas__title {
+        margin: 0 0 16px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-h1, 48px);
+        line-height: 1.1;
+        text-transform: uppercase;
+        color: var(--color-purple, #6B3DFE);
+    }
+
+    .tarifas__subtitle {
+        margin: 0;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-subtitle, 24px);
+        line-height: 1.4;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    .tarifas__subtitle .hero-accent {
+        font-weight: 400;
+    }
+
+    /* ── Columna de video ──────────────────────────────────────────────────
+       Caja 16:9 que ocupa el espacio (antes tarjetas de precios en el
+       mock). Si hay un archivo propio o un embed, llenan la caja entera;
+       si no hay nada cargado aun, el editor muestra un placeholder. ────── */
+    .tarifas__col-video {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: 12px;
+        overflow: hidden;
+        background-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .tarifas__video-file {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .tarifas__video-embed {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .tarifas__video-embed iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+    .tarifas__video-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 600;
+        color: var(--color-purple, #6B3DFE);
+        text-align: center;
+        padding: 16px;
+        word-break: break-all;
+    }
+
+    /* Vista previa en el editor: miniatura o placeholder generico. */
+    .tarifas__video-preview-img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .tarifas__video-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        height: 100%;
+        border: 1.5px dashed rgba(107, 61, 254, 0.4);
+        color: var(--color-purple, #6B3DFE);
+    }
+
+    .tarifas__video-placeholder p {
+        margin: 0;
+        font-family: 'Golos Text', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+        .tarifas__grid {
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+
+        .tarifas__col-text {
+            max-width: none;
+        }
+
+        .tarifas__title {
+            font-size: var(--text-h2, 32px);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .tarifas__container {
+            padding-inline: var(--section-padding-x-mobile, 30px);
+        }
+    }
+
+}

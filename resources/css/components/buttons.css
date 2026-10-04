@@ -1,0 +1,100 @@
+/* ==========================================================================
+   Botón AGO — átomo único (BEM)
+   ==========================================================================
+   Markup (usar siempre template-parts/atoms/button.php):
+
+       <a class="ago-btn ago-btn--dark" href="...">
+           <span class="ago-btn__icon" aria-hidden="true"><svg>…</svg></span>
+           <span class="ago-btn__label">Texto</span>
+       </a>
+
+   Color  → modificador: --dark (fondo azul oscuro) | --light (fondo blanco) | --outline (borde, fondo transparente)
+   Tamaño → NO se duplica el botón: se sobreescriben sus variables
+            (--ago-btn-width, --ago-btn-height, --ago-btn-font). El círculo
+            y el padding se calculan solos a partir de la altura. Ej.:
+                .hero__cta { --ago-btn-width: 280px; --ago-btn-height: 64px; --ago-btn-font: 1.25rem; }
+   ========================================================================== */
+
+@layer components {
+
+    /* Las variables --ago-btn-* NO se declaran aquí: se leen con fallback a
+       los tokens, así cualquier clase padre o hermana puede sobreescribirlas
+       sin depender del orden de carga del CSS. */
+    .ago-btn {
+        --_h:   var(--ago-btn-height, var(--btn-height));
+        --_gap: calc(var(--_h) * 0.11);                 /* aire alrededor del círculo */
+
+        display: inline-flex;
+        align-items: center;
+        min-width: min(var(--ago-btn-width, var(--btn-width)), 100%);   /* ancho base; crece si el texto no cabe */
+        max-width: 100%;
+        height: var(--_h);
+        padding: var(--_gap);
+        border-radius: 9999px;
+        font-size: var(--ago-btn-font, var(--text-btn));
+        font-weight: 700;
+        line-height: 1;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .ago-btn__icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: calc(var(--_h) - var(--_gap) * 2);
+        height: calc(var(--_h) - var(--_gap) * 2);
+        border-radius: 50%;
+        background-color: var(--color-ago-blue);
+        color: var(--color-white);
+    }
+
+    .ago-btn__icon svg {
+        width: 40%;
+        height: 40%;
+    }
+
+    .ago-btn__label {
+        flex: 1;
+        padding-inline: var(--_gap);
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    /* En pantallas angostas el texto puede bajar a 2 líneas en vez de cortarse */
+    @media (max-width: 781px) {
+        .ago-btn {
+            font-size: var(--ago-btn-font, var(--text-btn-mobile));
+        }
+
+        .ago-btn__label {
+            white-space: normal;
+            overflow-wrap: anywhere;   /* correos/URLs largos sin espacios */
+            line-height: 1.1;
+        }
+    }
+
+    .ago-btn:focus-visible {
+        outline: 2px solid var(--color-ago-blue);
+        outline-offset: 3px;
+    }
+
+    /* ── Variantes de color ───────────────────────────────────────── */
+    .ago-btn--dark {
+        background-color: var(--color-ago-navy);
+        color: var(--color-white);
+    }
+
+    .ago-btn--light {
+        background-color: var(--color-white);
+        color: var(--color-ago-blue);
+    }
+
+    /* Contorno: fondo transparente, borde navy, texto azul */
+    .ago-btn--outline {
+        background-color: transparent;
+        color: var(--color-ago-blue);
+        box-shadow: inset 0 0 0 1px var(--color-ago-navy);
+    }
+}

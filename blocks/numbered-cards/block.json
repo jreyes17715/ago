@@ -1,0 +1,25 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "ago/numbered-cards",
+    "title": "Tarjetas numeradas",
+    "category": "ago",
+    "icon": "screenoptions",
+    "description": "Tarjetas con número automático (01, 02…), título y contenido. Alternan blanco / azul; esquina inferior derecha recortada. N por fila, las que sobran se centran abajo.",
+    "textdomain": "ago",
+    "supports": {
+        "html": false
+    },
+    "attributes": {
+        "columns": { "type": "number", "default": 3 },
+        "items": {
+            "type": "array",
+            "default": [
+                { "title": "", "content": "" },
+                { "title": "", "content": "" },
+                { "title": "", "content": "" }
+            ]
+        }
+    },
+    "render": "file:./render.php"
+}

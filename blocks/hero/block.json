@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "ago/hero",
+    "title": "Hero",
+    "category": "ago",
+    "icon": "cover-image",
+    "description": "Hero principal: imagen de fondo, pre-título, título, contenido, fecha y botón.",
+    "textdomain": "ago",
+    "supports": {
+        "html": false,
+        "multiple": false
+    },
+    "attributes": {
+        "bgId":     { "type": "number", "default": 0 },
+        "pretitle": { "type": "string", "default": "" },
+        "title":    { "type": "string", "default": "" },
+        "content":  { "type": "string", "default": "" },
+        "date":     { "type": "string", "default": "" },
+        "btnText":  { "type": "string", "default": "" },
+        "btnUrl":   { "type": "string", "default": "" }
+    },
+    "render": "file:./render.php"
+}

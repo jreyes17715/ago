@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Nuestro Equipo — AGO
+   Carrusel infinito de fotos grandes a todo el ancho de la pantalla (bleed
+   fuera del contenedor de 1200px, mismo criterio que el bloque Blog). El
+   auto-scroll continuo (sin pausas entre slides) se configura en
+   resources/js/app.js vía Swiper (freeMode + autoplay delay:0).
+   ========================================================================== */
+
+@layer components {
+
+    .equipo {
+        position: relative;
+        width: 100vw;
+        margin-inline: calc(50% - 50vw);
+        overflow: hidden;
+    }
+
+    .equipo__swiper {
+        width: 100%;
+    }
+
+    /* !important necesario: nuestro CSS vive dentro de "@layer components",
+       y el CSS propio de Swiper (swiper-bundle.min.css, cargado desde CDN
+       SIN layer) no está en ninguna capa — por regla de CSS Cascade Layers,
+       una declaracion sin capa le gana a CUALQUIER declaracion en capa, sin
+       importar la especificidad. Su ".swiper-slide{width:100%;height:100%}"
+       ganaba siempre y dejaba cada foto casi a pantalla completa. Con
+       !important esa prioridad se invierte a nuestro favor. */
+    .equipo__swiper .swiper-slide.equipo__slide {
+        width: 446px !important;
+        height: 540px !important;
+        flex-shrink: 0;
+        border-right: 2px solid var(--color-white, #fff);
+    }
+
+    .equipo__img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* ── Vista previa en el editor (sin Swiper, solo grilla) ──────────────── */
+    .equipo__preview-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 2px;
+    }
+
+    .equipo__preview-grid .equipo__img {
+        width: 446px;
+        height: 540px;
+        flex-shrink: 0;
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+        .equipo__swiper .swiper-slide.equipo__slide,
+        .equipo__preview-grid .equipo__img {
+            width: 280px;
+            height: 420px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .equipo__swiper .swiper-slide.equipo__slide,
+        .equipo__preview-grid .equipo__img {
+            width: 220px;
+            height: 320px;
+        }
+    }
+
+}

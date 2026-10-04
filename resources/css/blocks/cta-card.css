@@ -1,0 +1,74 @@
+/* ==========================================================================
+   Tarjeta CTA — AGO  (blocks/cta-card)
+   Tarjeta redondeada dentro del contenedor (respeta --container-max).
+   Fondo = imagen subida, sin degradado.
+   ========================================================================== */
+
+@layer components {
+
+    .cta-card {
+        --cta-card-radius:   var(--radius-media);
+        --cta-card-pad:      80px;      /* padding interno (medido, confirmar) */
+        --cta-card-text-max: 720px;     /* el texto no invade la figura de la derecha */
+
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding: var(--section-padding-y) var(--section-padding-x);
+    }
+
+    .cta-card__box {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        border-radius: var(--cta-card-radius);
+        background-color: var(--color-ago-navy);
+        color: var(--color-white);
+    }
+
+    .cta-card__bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .cta-card__body {
+        max-width: calc(var(--cta-card-text-max) + var(--cta-card-pad) * 2);
+        padding: var(--cta-card-pad);
+    }
+
+    .cta-card__title {
+        color: var(--color-white);
+    }
+
+    .cta-card__text {
+        margin: 32px 0 0;
+        font-size: var(--text-body);
+        line-height: 1.2;
+    }
+
+    .cta-card__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px 32px;
+        margin-top: 48px;
+    }
+
+    @media (max-width: 781px) {
+        .cta-card {
+            --cta-card-pad: 32px 24px;
+
+            padding-inline: var(--section-padding-x-mobile);
+        }
+
+        .cta-card__body {
+            max-width: none;
+        }
+
+        .cta-card__text {
+            font-size: var(--text-body-mobile);
+        }
+    }
+}

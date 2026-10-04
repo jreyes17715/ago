@@ -1,0 +1,101 @@
+/* ==========================================================================
+   Hero — AGO  (blocks/hero)
+   Fondo a sangre completa + degradado azul desde abajo/izquierda.
+   El header flota encima (site-header--overlay), por eso el padding-top.
+   ========================================================================== */
+
+@layer components {
+
+    .hero {
+        --hero-min-height: 100svh;
+        --hero-header-space: 160px;   /* alto reservado para el header flotante */
+
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        align-items: flex-end;
+        min-height: var(--hero-min-height);
+        overflow: hidden;
+        background-color: var(--color-ago-navy);
+        color: var(--color-white);
+    }
+
+    .hero__bg {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Degradado azul de marca — más fuerte abajo a la izquierda */
+    .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+            linear-gradient(to top,
+                color-mix(in srgb, var(--color-ago-blue) 85%, transparent) 0%,
+                transparent 45%),
+            linear-gradient(75deg,
+                color-mix(in srgb, var(--color-ago-blue) 90%, transparent) 0%,
+                color-mix(in srgb, var(--color-ago-blue) 55%, transparent) 45%,
+                transparent 80%);
+    }
+
+    .hero__inner {
+        width: 100%;
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding: var(--hero-header-space) var(--section-padding-x) var(--section-padding-y);
+    }
+
+    .hero__content {
+        max-width: 820px;
+    }
+
+    .hero__pretitle {
+        margin: 0 0 8px;
+        font-size: var(--text-subtitle);
+        font-weight: 700;
+    }
+
+    .hero__title {
+        margin: 0 0 24px;
+        font-size: var(--text-h1);
+        font-weight: 700;
+        line-height: 1.05;
+        color: var(--color-white);
+    }
+
+    .hero__text {
+        max-width: 680px;
+        margin: 0 0 32px;
+        font-size: var(--text-body);
+        line-height: 1.25;
+    }
+
+    .hero__date {
+        margin: 0 0 48px;
+        font-size: var(--text-subtitle);
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    @media (max-width: 781px) {
+        .hero {
+            --hero-header-space: 120px;
+        }
+
+        .hero__inner {
+            padding-inline: var(--section-padding-x-mobile);
+        }
+
+        .hero__pretitle,
+        .hero__date { font-size: var(--text-subtitle-mobile); }
+        .hero__title { font-size: var(--text-h1-mobile); }
+        .hero__text  { font-size: var(--text-body-mobile); }
+    }
+}

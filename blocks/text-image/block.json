@@ -1,0 +1,26 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "ago/text-image",
+    "title": "Texto + Imagen",
+    "category": "ago",
+    "icon": "align-pull-left",
+    "description": "Título, contenido (párrafos y listas), botón opcional e imagen. Lados invertibles y título lateral o arriba.",
+    "textdomain": "ago",
+    "supports": {
+        "html": false
+    },
+    "attributes": {
+        "layout":       { "type": "string",  "default": "side" },
+        "reverse":      { "type": "boolean", "default": false },
+        "titleLight":   { "type": "string",  "default": "" },
+        "titleBold":    { "type": "string",  "default": "" },
+        "titleStacked": { "type": "boolean", "default": true },
+        "imageId":      { "type": "number",  "default": 0 },
+        "image2Id":     { "type": "number",  "default": 0 },
+        "btnText":      { "type": "string",  "default": "" },
+        "btnUrl":       { "type": "string",  "default": "" },
+        "btnVariant":   { "type": "string",  "default": "dark" }
+    },
+    "render": "file:./render.php"
+}

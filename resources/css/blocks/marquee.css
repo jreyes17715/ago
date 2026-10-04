@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Marquee de palabras — AGO
+   Franja de palabras/frases separadas por un punto grande, corriendo en
+   loop infinito (CSS puro, sin JS). La pista viene duplicada 2 veces desde
+   render.php para que translateX(-50%) genere un loop continuo y sin salto.
+   ========================================================================== */
+
+@layer components {
+
+    .marquee {
+        position: relative;
+        overflow: hidden;
+        padding-block: 28px;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        background-color: var(--color-white, #fff);
+    }
+
+    .marquee__viewport {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .marquee__track {
+        display: inline-flex;
+        align-items: center;
+        gap: 28px;
+        white-space: nowrap;
+        will-change: transform;
+        animation: marquee-scroll 28s linear infinite;
+    }
+
+    .marquee:hover .marquee__track {
+        animation-play-state: paused;
+    }
+
+    .marquee__item {
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 1;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    .marquee__dot {
+        font-size: 32px;
+        line-height: 1;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    @keyframes marquee-scroll {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .marquee__track {
+            animation: none;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .marquee {
+            padding-block: 18px;
+        }
+
+        .marquee__item,
+        .marquee__dot {
+            font-size: 20px;
+        }
+
+        .marquee__track {
+            gap: 18px;
+            animation-duration: 18s;
+        }
+    }
+
+}

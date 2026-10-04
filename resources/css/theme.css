@@ -1,0 +1,49 @@
+@theme {
+    /* ══════════════════════════════════════════════════════════════
+       AGO — Design tokens (fuente única de verdad).
+       Cualquier cambio de color/tamaño se hace AQUÍ y en theme.json.
+       ══════════════════════════════════════════════════════════════ */
+
+    /* ── Colores de marca ─────────────────────────────────────────── */
+    --color-ago-navy:  #091628;   /* azul principal — mayoría de títulos   */
+    --color-ago-blue:  #003187;   /* azul secundario — íconos, acentos     */
+    --color-white:     #ffffff;
+
+    /* ── Tipografía — tamaños ─────────────────────────────────────── */
+    --text-h1:       5rem;        /* 80px — títulos principales            */
+    --text-h2:       3.75rem;     /* 60px — otros títulos                  */
+    --text-h3:       3rem;        /* 48px — títulos de tarjeta (medido de la línea de tiempo, confirmar) */
+    --text-subtitle: 1.5rem;      /* 24px — subtítulos                     */
+    --text-body:     1.5625rem;   /* 25px — contenido general              */
+    --text-small:    1.125rem;    /* 18px — texto de tarjeta (medido de la línea de tiempo, confirmar) */
+    --text-btn:      1.5rem;      /* 24px — texto de botón (medido de la imagen, confirmar) */
+    --text-nav:      1.25rem;     /* 20px — ítems del menú (medido del diseño, confirmar) */
+
+    /* Móvil (< 782px) — PROVISIONALES hasta tener el diseño mobile */
+    --text-h1-mobile:       2.75rem;   /* 44px */
+    --text-h2-mobile:       2.25rem;   /* 36px */
+    --text-subtitle-mobile: 1.125rem;  /* 18px */
+    --text-body-mobile:     1.125rem;  /* 18px */
+    --text-btn-mobile:      1.125rem;  /* 18px */
+
+    /* ── Botón — medidas base ─────────────────────────────────────── */
+    --btn-width:  337px;
+    --btn-height: 79px;
+
+    /* ── Formas ───────────────────────────────────────────────────── */
+    --radius-media: 30px;         /* esquinas de fotos (medido del diseño, confirmar) */
+
+    /* ── Layout ───────────────────────────────────────────────────── */
+    --container-max:            1200px;
+    --section-padding-y:        60px;
+    --section-padding-x:        24px;
+    --section-padding-x-mobile: 30px;
+
+    /* ── Breakpoints ──────────────────────────────────────────────── */
+    --breakpoint-xs: 480px;
+    --breakpoint-sm: 600px;
+    --breakpoint-md: 782px;
+    --breakpoint-lg: 960px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1440px;
+}

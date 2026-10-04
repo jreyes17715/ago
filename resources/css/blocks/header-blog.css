@@ -1,0 +1,123 @@
+/* ==========================================================================
+   Header Blog — AGO
+   Cabecera de la pagina "Blog" (el listado de entradas va debajo, en otro
+   bloque, se agrega despues). Fondo administrable (esquina, decorativo) +
+   2 imagenes flotantes con parallax que sangran fuera del bloque, mismo
+   patron que blocks/hero (offset negativo fijo, sin overflow:hidden en la
+   seccion, z-index:1 para pintarse sobre lo que sigue).
+   ========================================================================== */
+
+@layer components {
+
+    .header-blog {
+        position: relative;
+        padding-block: var(--section-padding-y, 60px);
+        /* Extra abajo: deja aire para que la imagen flotante que sangra
+           (bottom negativo) no quede pegada al siguiente bloque. */
+        padding-bottom: calc(var(--section-padding-y, 60px) + 60px);
+        background-color: var(--color-white, #fff);
+        background-repeat: no-repeat;
+        background-position: top right;
+        background-size: auto;
+    }
+
+    /* ── Imagenes flotantes (parallax, sangran fuera del bloque) ─────────── */
+    .header-blog__floating {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+        filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.18));
+        will-change: transform;
+    }
+
+    /* Imagen 1: arriba a la izquierda, sangra por el borde superior/izquierdo
+       (offset negativo fijo, no %, igual criterio que .hero__floating). */
+    .header-blog__floating--1 {
+        top: -20px;
+        left: -60px;
+        width: 220px;
+    }
+
+    /* Imagen 2: abajo a la derecha, sangra por el borde inferior. */
+    .header-blog__floating--2 {
+        bottom: -60px;
+        right: 2%;
+        width: 380px;
+    }
+
+    /* ── Contenido ─────────────────────────────────────────────────────── */
+    .header-blog__container {
+        position: relative;
+        z-index: 2;
+        max-width: var(--container-max, 1200px);
+        width: 100%;
+        margin-inline: auto;
+        padding-inline: var(--section-padding-x, 24px);
+    }
+
+    .header-blog__content {
+        max-width: 560px;
+        margin-right: auto;
+    }
+
+    .header-blog__title {
+        margin: 0 0 8px;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-h1, 48px);
+        line-height: 1.1;
+        text-transform: uppercase;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    .header-blog__subtitle {
+        margin: 0 0 20px;
+        font-family: 'Instrument Serif', serif;
+        font-style: italic;
+        font-weight: 400;
+        font-size: var(--text-h2, 32px);
+        line-height: 1.3;
+        color: var(--color-purple, #6B3DFE);
+    }
+
+    .header-blog__text {
+        margin: 0;
+        font-family: 'Golos Text', sans-serif;
+        font-weight: 700;
+        font-size: var(--text-body, 18px);
+        line-height: 1.6;
+        color: var(--color-text-dark, #1A1A1A);
+    }
+
+    .header-blog__text .hero-accent {
+        font-weight: 400;
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+        .header-blog__content {
+            max-width: none;
+            margin-right: 0;
+        }
+
+        .header-blog__title {
+            font-size: var(--text-h2, 32px);
+        }
+
+        .header-blog__subtitle {
+            font-size: var(--text-subtitle, 24px);
+        }
+    }
+
+    @media (max-width: 767px) {
+        .header-blog__container {
+            padding-inline: var(--section-padding-x-mobile, 30px);
+        }
+
+        /* Igual que en hero: se ocultan en mobile para priorizar el contenido. */
+        .header-blog__floating {
+            display: none;
+        }
+    }
+
+}

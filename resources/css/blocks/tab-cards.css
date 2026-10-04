@@ -1,0 +1,130 @@
+/* ==========================================================================
+   Tarjetas con encabezado — AGO  (blocks/tab-cards + blocks/tab-card)
+   Cuadrícula de 2 columnas; .tab-card--wide ocupa la fila completa.
+   Encabezado navy con flecha hacia abajo; cuerpo blanco con borde suave.
+   Contenido: párrafos centrados; listas alineadas a la izquierda pero
+   centradas como bloque.
+   ========================================================================== */
+
+@layer components {
+
+    .tab-cards {
+        --tc-radius: 16px;
+        --tc-arrow:  18px;     /* tamaño de la flecha bajo el encabezado (medido, confirmar) */
+        --tc-gap:    24px;
+
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding: var(--section-padding-y) var(--section-padding-x);
+    }
+
+    .tab-cards__grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: stretch;
+        gap: var(--tc-gap);
+    }
+
+    /* ── Tarjeta ──────────────────────────────────────────────────── */
+    .tab-card {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        margin: 0;
+        border: 1px solid color-mix(in srgb, var(--color-ago-navy) 12%, var(--color-white));
+        border-radius: var(--tc-radius);
+        background-color: var(--color-white);
+        color: var(--color-ago-navy);
+    }
+
+    .tab-card--wide {
+        grid-column: 1 / -1;
+    }
+
+    /* Encabezado + flecha */
+    .tab-card__header {
+        position: relative;
+        margin: -1px -1px 0;           /* tapa el borde de la tarjeta */
+        padding: 14px 24px;
+        border-radius: var(--tc-radius) var(--tc-radius) 0 0;
+        background-color: var(--color-ago-navy);
+        color: var(--color-white);
+        font-size: var(--text-h3);
+        font-weight: 700;
+        line-height: 1.1;
+        text-align: center;
+    }
+
+    .tab-card__header::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-top: var(--tc-arrow) solid var(--color-ago-navy);
+        border-inline: var(--tc-arrow) solid transparent;
+        transform: translateX(-50%);
+    }
+
+    /* Cuerpo */
+    .tab-card__body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: calc(var(--tc-arrow) + 40px) 40px 48px;
+        font-size: var(--text-small);
+        line-height: 1.35;
+        text-align: center;
+    }
+
+    .tab-card__body > * {
+        margin: 0 0 1em;
+    }
+
+    .tab-card__body > *:last-child {
+        margin-bottom: 0;
+    }
+
+    .tab-card__body strong {
+        font-weight: 700;
+    }
+
+    /* Listas: alineadas a la izquierda, centradas como bloque */
+    .tab-card__body ul,
+    .tab-card__body ol {
+        align-self: center;
+        max-width: 100%;
+        padding-left: 1.2em;
+        text-align: left;
+    }
+
+    .tab-card__body ul { list-style: disc; }
+    .tab-card__body ol { list-style: decimal; }
+
+    .tab-card__body li + li {
+        margin-top: 0.25em;
+    }
+
+    @media (max-width: 781px) {
+        .tab-cards {
+            --tc-arrow: 14px;
+
+            padding-inline: var(--section-padding-x-mobile);
+        }
+
+        .tab-cards__grid {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .tab-card__header {
+            font-size: var(--text-h2-mobile);
+        }
+
+        .tab-card__body {
+            padding: calc(var(--tc-arrow) + 28px) 24px 32px;
+            font-size: 1rem;
+        }
+    }
+}

@@ -1,0 +1,144 @@
+/* ==========================================================================
+   Lista con puntos — AGO  (blocks/point-list)
+   Círculo azul + texto; los círculos de una misma columna se conectan con una
+   línea vertical y cada texto lleva separador inferior (menos el último).
+   ========================================================================== */
+
+@layer components {
+
+    .point-list {
+        --point-list-dot:        64px;     /* diámetro del círculo (medido, confirmar) */
+        --point-list-gap-x:      32px;     /* círculo ↔ texto */
+        --point-list-gap-y:      40px;     /* separación vertical entre puntos */
+        --point-list-col-gap:    120px;
+        --point-list-line:       color-mix(in srgb, var(--color-ago-blue) 55%, var(--color-white));
+        --point-list-separator:  color-mix(in srgb, var(--color-ago-navy) 12%, var(--color-white));
+
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding: var(--section-padding-y) var(--section-padding-x);
+        color: var(--color-ago-navy);
+    }
+
+    .point-list__title {
+        margin: 0 0 60px;
+        font-size: var(--text-subtitle);
+        font-weight: 700;
+        line-height: 1.2;
+        color: var(--color-ago-navy);
+    }
+
+    .point-list__columns {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: var(--point-list-col-gap);
+        align-items: start;
+    }
+
+    .point-list--cols-1 .point-list__columns {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .point-list__list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .point-list__item {
+        position: relative;
+        display: grid;
+        grid-template-columns: var(--point-list-dot) minmax(0, 1fr);
+        column-gap: var(--point-list-gap-x);
+        align-items: start;
+        padding-bottom: var(--point-list-gap-y);
+    }
+
+    .point-list__item:last-child {
+        padding-bottom: 0;
+    }
+
+    /* Línea vertical: del borde inferior del círculo hasta el siguiente círculo */
+    .point-list__item:not(:last-child)::before {
+        content: "";
+        position: absolute;
+        top: var(--point-list-dot);
+        bottom: 0;
+        left: calc(var(--point-list-dot) / 2 - 0.5px);
+        width: 1px;
+        background-color: var(--point-list-line);
+    }
+
+    .point-list__dot {
+        display: block;
+        width: var(--point-list-dot);
+        height: var(--point-list-dot);
+        border-radius: 50%;
+        background-color: var(--color-ago-blue);
+    }
+
+    .point-list__text {
+        margin: 0;
+        padding-top: calc(var(--point-list-dot) * 0.2);
+        padding-bottom: var(--point-list-gap-y);
+        border-bottom: 1px solid var(--point-list-separator);
+        font-size: var(--text-body);
+        line-height: 1.2;
+    }
+
+    .point-list__item:last-child .point-list__text {
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+
+    /* Botón "quitar" solo existe en el editor */
+    .point-list__remove {
+        position: absolute;
+        top: 0;
+        right: -8px;
+    }
+
+    @media (max-width: 781px) {
+        .point-list {
+            --point-list-dot:   44px;
+            --point-list-gap-x: 20px;
+            --point-list-gap-y: 28px;
+
+            padding-inline: var(--section-padding-x-mobile);
+        }
+
+        .point-list__title {
+            margin-bottom: 32px;
+            font-size: var(--text-subtitle-mobile);
+        }
+
+        .point-list__columns {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        /* En una sola columna, las dos listas se leen como una: el último punto
+           de la primera lista sigue conectado al primero de la siguiente. */
+        .point-list__list:not(:last-child) .point-list__item:last-child {
+            padding-bottom: var(--point-list-gap-y);
+        }
+
+        .point-list__list:not(:last-child) .point-list__item:last-child::before {
+            content: "";
+            position: absolute;
+            top: var(--point-list-dot);
+            bottom: 0;
+            left: calc(var(--point-list-dot) / 2 - 0.5px);
+            width: 1px;
+            background-color: var(--point-list-line);
+        }
+
+        .point-list__list:not(:last-child) .point-list__item:last-child .point-list__text {
+            padding-bottom: var(--point-list-gap-y);
+            border-bottom: 1px solid var(--point-list-separator);
+        }
+
+        .point-list__text {
+            font-size: var(--text-body-mobile);
+        }
+    }
+}

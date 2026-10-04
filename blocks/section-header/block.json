@@ -1,0 +1,25 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "ago/section-header",
+    "title": "Encabezado de sección",
+    "category": "ago",
+    "icon": "heading",
+    "description": "Título + contenido con imagen decorativa a sangre. Variantes: imagen a la derecha (texto a la izquierda) o imágenes a ambos lados (texto centrado).",
+    "textdomain": "ago",
+    "supports": {
+        "html": false,
+        "align": [ "full" ]
+    },
+    "attributes": {
+        "align":        { "type": "string",  "default": "full" },
+        "variant":      { "type": "string",  "default": "side" },
+        "titleLight":   { "type": "string",  "default": "" },
+        "titleBold":    { "type": "string",  "default": "" },
+        "titleStacked": { "type": "boolean", "default": false },
+        "titleSize":    { "type": "string",  "default": "xl" },
+        "imageLeftId":  { "type": "number",  "default": 0 },
+        "imageRightId": { "type": "number",  "default": 0 }
+    },
+    "render": "file:./render.php"
+}

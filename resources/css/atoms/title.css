@@ -1,0 +1,39 @@
+/* ==========================================================================
+   Átomo — Título AGO (template-parts/atoms/title.php)
+   .ago-title            parte fina + parte negrita en la misma línea
+   .ago-title--stacked   fina arriba, negrita abajo
+   .ago-title--xl / --lg tamaño (--text-h1 80px / --text-h2 60px)
+   Color: hereda (currentColor) → el bloque padre decide navy o blanco.
+   ========================================================================== */
+
+@layer components {
+
+    .ago-title {
+        margin: 0;
+        line-height: 1.05;
+        color: inherit;
+    }
+
+    .ago-title--xl { font-size: var(--text-h1); }
+    .ago-title--lg { font-size: var(--text-h2); }
+
+    .ago-title__light { font-weight: 300; }
+    .ago-title__bold  { font-weight: 800; }
+
+    .ago-title__light + .ago-title__bold::before {
+        content: " ";
+    }
+
+    .ago-title--stacked .ago-title__light {
+        display: block;
+    }
+
+    .ago-title--stacked .ago-title__light + .ago-title__bold::before {
+        content: none;
+    }
+
+    @media (max-width: 781px) {
+        .ago-title--xl { font-size: var(--text-h1-mobile); }
+        .ago-title--lg { font-size: var(--text-h2-mobile); }
+    }
+}
